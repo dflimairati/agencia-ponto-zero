@@ -1,0 +1,13 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/p/:product/:code",
+      "destination": "/"
+    },
+    {
+      "source": "/indicar/:code",
+      "destination": "/"
+    }
+  ]
+}
