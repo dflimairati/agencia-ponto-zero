@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="theme-color" content="#0a101b"/>
+  <meta name="description" content="Central de Indicações Ponto Zero: recomende nossos sistemas e acompanhe oportunidades de comissão."/>
+  <title>Central de Indicações | Ponto Zero</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e9f2ff;background:#080e17;--muted:#91a1b7;--green:#8bf1bd;--border:#253347}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse 900px 520px at 80% 0%,#18364a 0%,transparent 75%),radial-gradient(ellipse 700px 700px at 1% 30%,#11233a 0%,transparent 65%),#080e17;min-height:100vh}
+    a{text-decoration:none;color:inherit}button,input{font:inherit}button{cursor:pointer}
+    .wrap{width:min(1160px,calc(100% - 36px));margin:auto}
+    header{position:sticky;top:0;z-index:10;backdrop-filter:blur(20px);background:#080e17db;border-bottom:1px solid #ffffff16}
+    .nav{height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.7px}.brandlogo{display:grid;place-items:center;background:linear-gradient(145deg,#a1fed0,#54d0bf);border-radius:15px;width:43px;height:43px;color:#06221e;font-size:21px;font-weight:950;box-shadow:0 12px 30px #51ccac24}.navlinks{display:flex;align-items:center;gap:22px}.navlinks a{font-size:14px;color:#b3c0d1}.btn{border:0;border-radius:13px;padding:13px 18px;font-weight:750;transition:transform .2s,background .2s;display:inline-flex;align-items:center;justify-content:center;gap:9px}.btn:hover{transform:translateY(-2px)}.btn-primary{background:#91f5c4;color:#0b2219;box-shadow:0 10px 30px #6cefb01c}.btn-outline{border:1px solid #44546b;background:#172235;color:#eef4ff}.btn-ghost{border:1px solid #344357;background:#0e1927;color:#dce9f7}
+    .hero{padding:84px 0 67px;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:40px}.eyebrow{display:inline-flex;align-items:center;gap:9px;border:1px solid #6ccba44d;color:#b9ffdb;background:#12312e;padding:9px 12px;border-radius:999px;text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:1.1px}.dot{height:7px;width:7px;border-radius:50%;background:#8effcb;box-shadow:0 0 14px #8effcb}
+    h1{font-weight:850;line-height:1.05;letter-spacing:-2.5px;font-size:clamp(42px,5.6vw,70px);margin:22px 0}h1 em{font-style:normal;background:linear-gradient(110deg,#8ef2bb,#83e4ee);background-clip:text;-webkit-background-clip:text;color:transparent}p{line-height:1.7}.lead{font-size:18px;color:#b1bed0;max-width:570px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.fine{font-size:12px;color:var(--muted);margin-top:20px}
+    .visual{background:linear-gradient(145deg,#1e3043,#111b2c);border:1px solid #42566b75;border-radius:28px;padding:24px;box-shadow:0 26px 75px #0008;transform:rotate(2deg)}.visual-top{display:flex;align-items:center;justify-content:space-between}.visual-label{font-size:13px;color:#b3c4d8}.visual-value{font-size:45px;font-weight:850;letter-spacing:-2px;margin:12px 0}.pill{padding:6px 10px;background:#0e372f;border-radius:999px;font-size:12px;color:#b4ffdb}.visual-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:23px}.metric{border-radius:16px;padding:18px;background:#ffffff0c;border:1px solid #ffffff14}.metric b{font-size:23px}.metric span{font-size:12px;color:#9baec5;display:block;margin-top:8px}.sparkline{margin-top:30px;display:flex;align-items:end;gap:9px;height:75px}.sparkline i{flex:1;display:block;border-radius:9px 9px 0 0;background:linear-gradient(#8df5be,#248d7d);opacity:.75}
+    section{padding:60px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:28px}.kicker{color:var(--green);letter-spacing:1.1px;text-transform:uppercase;font-size:12px;font-weight:800}h2{font-size:clamp(27px,3.5vw,40px);line-height:1.2;margin:11px 0 0;letter-spacing:-1.2px}.secondary{color:#a4b4c8}
+    .products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{padding:24px;background:#121d2c;border:1px solid #2a3c51;border-radius:23px;display:flex;flex-direction:column;gap:15px;box-shadow:0 15px 38px #0000001a}.card:hover{border-color:#5e9f92}.product-icon{width:55px;height:55px;border-radius:17px;display:grid;place-items:center;font-size:25px}.card h3{font-size:21px;margin:0}.card p{font-size:14px;color:#a7b7cd;margin:0;flex:1}.reward{border-top:1px solid #ffffff1b;padding-top:16px;display:flex;justify-content:space-between;align-items:center;gap:8px}.reward strong{font-size:22px;color:#a3ffd2}.reward span{font-size:12px;color:#91a4bc}.tag{font-size:11px;border:1px solid #3c5a56;background:#13332e;border-radius:99px;padding:5px 9px;color:#abf5d1}
+    .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.step{border:1px solid #2a3c51;border-radius:19px;padding:25px;background:#101a28}.step b{display:grid;place-items:center;height:40px;width:40px;background:#1a3a34;border-radius:12px;color:#9af9cb}.step h3{margin:18px 0 8px}.step p{margin:0;font-size:14px;color:#aabbd0}
+    .panel{background:linear-gradient(120deg,#1a3141,#112233);border:1px solid #3d5965;border-radius:28px;padding:35px;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}.panel h2{margin-top:12px}.inputrow{display:flex;gap:10px}.inputrow input{background:#091725;border:1px solid #466071;border-radius:12px;padding:15px;color:#fff;min-width:0;width:100%;outline:none;text-transform:uppercase}.inputrow input:focus{border-color:#93efc2}.links-output{margin-top:18px;display:none}.ref-link{display:flex;align-items:center;gap:9px;margin-top:8px;padding:9px;background:#081923;border:1px solid #2e5360;border-radius:12px}.ref-link input{text-transform:none;flex:1;background:transparent;border:0;color:#c7f4df;outline:none;width:100%;font-size:12px}.smallbtn{padding:9px 11px;border:1px solid #456677;background:#1d3846;color:#e4ffeb;border-radius:9px;font-size:12px;font-weight:750}.note{font-size:12px;color:#abc0cf}
+    footer{border-top:1px solid #293748;margin-top:55px;padding:30px 0;color:#8499b0;font-size:13px}.footerinner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+    .toast{position:fixed;bottom:22px;right:22px;background:#d1ffe3;color:#09251d;padding:13px 18px;border-radius:12px;box-shadow:0 15px 50px #0009;font-weight:750;opacity:0;pointer-events:none;transition:opacity .2s}.toast.show{opacity:1}
+    .redirect{display:none;max-width:640px;margin:80px auto 20px;padding:35px;background:#152536;border-radius:22px;border:1px solid #354b63;text-align:center}
+    @media(max-width:800px){.navlinks a:not(.btn){display:none}.nav{height:67px}.hero{grid-template-columns:1fr;padding-top:55px}.visual{transform:none;max-width:520px}.products,.steps{grid-template-columns:1fr}.panel{grid-template-columns:1fr;padding:24px}.section-head{display:block}.hero h1{letter-spacing:-1.5px}.hero{gap:22px}section{padding:45px 0}}
+    @media(max-width:440px){.navlinks .btn{padding:11px 12px;font-size:12px}.brand{font-size:14px}.brandlogo{height:38px;width:38px}.inputrow{flex-direction:column}.actions .btn{width:100%}.visual-value{font-size:38px}}
+  </style>
+</head>
+<body>
+  <header><nav class="nav wrap"><a href="/" class="brand"><span class="brandlogo">P<span style="opacity:.6">Z</span></span><span>Central de <span style="color:#a4f8cf">Indicações</span></span></a><div class="navlinks"><a href="#produtos">Nossos sistemas</a><a href="#como-funciona">Como funciona</a><a href="#meucodigo" class="btn btn-outline">Tenho um código</a></div></nav></header>
+  <main id="main">
+    <div class="wrap hero"><div><span class="eyebrow"><span class="dot"></span> Indique. Compartilhe. Cresça.</span><h1>Seu contato pode valer uma <em>recompensa.</em></h1><p class="lead">Conhece alguém que precisa de um sistema para o negócio? Recomende as soluções da Ponto Zero e participe do programa de indicações.</p><div class="actions"><a class="btn btn-primary" id="join" href="https://wa.me/5542998319122?text=Ol%C3%A1%21%20Quero%20participar%20da%20Central%20de%20Indica%C3%A7%C3%B5es%20da%20Ponto%20Zero." target="_blank" rel="noopener noreferrer">Quero ser indicador ↗</a><a class="btn btn-ghost" href="#como-funciona">Entender o programa ↓</a></div><p class="fine">O cadastro de indicadores é feito com nossa equipe nesta fase inicial. Comissão apenas após assinatura validada.</p></div>
+      <div class="visual" aria-label="Exemplo de ganho com cinco indicações de Agende Barber"><div class="visual-top"><span class="visual-label">Potencial de indicação · Agende Barber</span><span class="pill">R$ 15 por assinatura</span></div><div class="visual-value">R$ 75,00</div><span class="visual-label">Exemplo com 5 novas assinaturas elegíveis</span><div class="sparkline" aria-hidden="true"><i style="height:27%"></i><i style="height:43%"></i><i style="height:39%"></i><i style="height:68%"></i><i style="height:52%"></i><i style="height:81%"></i><i style="height:100%"></i><i style="height:78%"></i></div><div class="visual-grid"><div class="metric"><b>1ª mensalidade</b><span>Recompensa não recorrente</span></div><div class="metric"><b>Pix</b><span>Pagamento após validação</span></div></div></div>
+    </div>
+    <section id="produtos" class="wrap"><div class="section-head"><div><span class="kicker">Soluções para indicar</span><h2>Uma central, vários sistemas.</h2><p class="secondary">Cada produto pode ter suas próprias regras de comissionamento.</p></div></div><div class="products">
+      <article class="card"><div class="product-icon" style="background:#17382f">✂️</div><div><h3>Agende Barber</h3><p>Agendamentos, gestão, assinaturas e fidelização para barbearias.</p></div><div class="reward"><div><span>Por nova assinatura validada</span><br><strong>R$ 15,00</strong></div><span class="tag">Programa inicial</span></div><a class="btn btn-outline" href="#meucodigo" data-prefill="agende-barber">Gerar meu link →</a></article>
+      <article class="card"><div class="product-icon" style="background:#3e2b1b">🍔</div><div><h3>Zappi Food</h3><p>Cardápio digital, delivery e gestão de pedidos sem comissão por venda.</p></div><div class="reward"><div><span>Recompensa</span><br><strong style="font-size:18px;color:#b7c5d7">A definir</strong></div><span class="tag" style="color:#cfdeec;background:#263443;border-color:#3e5268">Em configuração</span></div><a class="btn btn-outline" href="#meucodigo" data-prefill="zappi-food">Gerar meu link →</a></article>
+      <article class="card"><div class="product-icon" style="background:#1b3153">📊</div><div><h3>Finança Exata</h3><p>Controle financeiro simples com inteligência e relatórios.</p></div><div class="reward"><div><span>Recompensa</span><br><strong style="font-size:18px;color:#b7c5d7">A definir</strong></div><span class="tag" style="color:#cfdeec;background:#263443;border-color:#3e5268">Em configuração</span></div><a class="btn btn-outline" href="#meucodigo" data-prefill="financa-exata">Consultar indicação →</a></article>
+    </div></section>
+    <section class="wrap" id="como-funciona"><span class="kicker">É simples</span><h2>Três passos para indicar.</h2><div class="steps" style="margin-top:26px"><div class="step"><b>01</b><h3>Peça seu cadastro</h3><p>Fale com nossa equipe para receber um código pessoal vinculado aos seus dados.</p></div><div class="step"><b>02</b><h3>Compartilhe o link</h3><p>Escolha qual sistema divulgar e envie o link personalizado para seus amigos.</p></div><div class="step"><b>03</b><h3>Valide a assinatura</h3><p>A recompensa depende da contratação e confirmação do pagamento. O crédito não é gerado por simples clique ou teste.</p></div></div></section>
+    <section class="wrap" id="meucodigo"><div class="panel"><div><span class="kicker">Área do indicador</span><h2>Já recebeu seu código?</h2><p class="secondary">Digite abaixo para montar seus links personalizados. O código deve ter sido autorizado pela nossa equipe; gerar um link não equivale a registrar uma comissão.</p><a class="btn btn-ghost" href="https://wa.me/5542998319122?text=Ol%C3%A1%21%20Preciso%20solicitar%20ou%20recuperar%20meu%20c%C3%B3digo%20de%20indica%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">Solicitar ou recuperar código ↗</a></div><div><label for="code" style="font-size:13px;font-weight:750">Seu código de indicador</label><form id="code-form" class="inputrow" style="margin-top:10px"><input id="code" maxlength="24" placeholder="EX: JOAO123" required pattern="[A-Za-z0-9_-]{3,24}" autocomplete="off"/><button class="btn btn-primary" type="submit">Gerar links</button></form><div class="links-output" id="links-output"><p class="note">Compartilhe os links abaixo. A atribuição definitiva depende da integração com o cadastro e o pagamento de cada sistema.</p><div id="links-list"></div></div></div></div></section>
+  </main>
+  <aside id="redirect" class="redirect"><h2 id="redirect-title">Abrindo sistema...</h2><p id="redirect-copy" class="secondary">Se você não for redirecionado, utilize o botão abaixo.</p><a id="redirect-action" class="btn btn-primary" href="/">Continuar ↗</a></aside>
+  <footer><div class="wrap footerinner"><span>© 2026 Ponto Zero · Central de Indicações</span><span>Programa sujeito à validação de elegibilidade, pagamentos e regras de cada produto.</span></div></footer><div class="toast" id="toast" role="status">Link copiado!</div>
+  <script>
+  (function(){
+    'use strict';
+    const products=[
+      {slug:'agende-barber',name:'Agende Barber',url:'https://agendebarber.com/'},
+      {slug:'zappi-food',name:'Zappi Food',url:'https://zappifood.com/'},
+      {slug:'financa-exata',name:'Finança Exata',url:null}
+    ];
+    const clean=v=>(v||'').trim().toUpperCase().replace(/[^A-Z0-9_-]/g,'').slice(0,24);
+    const toast=document.getElementById('toast');
+    const notify=t=>{toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2500)};
+    const parts=location.pathname.split('/').filter(Boolean);
+    const productSlug=parts[0]==='p' ? parts[1] : null;
+    const codeFromPath=parts[0]==='p' ? clean(parts[2]) : (parts[0]==='indicar'?clean(parts[1]):'');
+    const queryCode=clean(new URLSearchParams(location.search).get('ref'));
+    const initialCode=codeFromPath||queryCode;
+    if(initialCode) document.getElementById('code').value=initialCode;
+    function buildLinks(code){
+      const list=document.getElementById('links-list');list.textContent='';
+      products.forEach(p=>{
+        const link=location.origin+'/p/'+encodeURIComponent(p.slug)+'/'+encodeURIComponent(code);
+        const item=document.createElement('div');item.className='ref-link';
+        const inp=document.createElement('input');inp.readOnly=true;inp.value=link;inp.setAttribute('aria-label','Link para '+p.name);
+        const btn=document.createElement('button');btn.className='smallbtn';btn.textContent='Copiar';btn.type='button';
+        btn.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(link);notify('Link de '+p.name+' copiado!')}catch(e){inp.select();notify('Selecione e copie o link')}});
+        item.append(inp,btn);list.append(item);
+      });
+      document.getElementById('links-output').style.display='block';
+    }
+    document.getElementById('code-form').addEventListener('submit',ev=>{
+      ev.preventDefault();const code=clean(document.getElementById('code').value);
+      if(!/^[A-Z0-9_-]{3,24}$/.test(code))return notify('Informe um código válido.');
+      buildLinks(code);
+    });
+    document.querySelectorAll('[data-prefill]').forEach(el=>el.addEventListener('click',()=>{document.getElementById('code').focus()}));
+    if(initialCode && !productSlug)buildLinks(initialCode);
+    if(productSlug){
+      const product=products.find(p=>p.slug===productSlug);
+      const main=document.getElementById('main'),panel=document.getElementById('redirect');
+      main.style.display='none';panel.style.display='block';
+      if(!product || !/^[A-Z0-9_-]{3,24}$/.test(codeFromPath)){
+        document.getElementById('redirect-title').textContent='Link de indicação inválido';
+        document.getElementById('redirect-copy').textContent='Revise o endereço ou solicite um link atualizado.';
+      }else if(!product.url){
+        document.getElementById('redirect-title').textContent=product.name+' · integração em preparação';
+        document.getElementById('redirect-copy').textContent='A contratação por indicação ainda não está liberada para este sistema. Entre em contato com a equipe.';
+      }else{
+        const dest=new URL(product.url);dest.searchParams.set('ref',codeFromPath);
+        dest.searchParams.set('utm_source','central-indicacoes');
+        dest.searchParams.set('utm_medium','referral');
+        const a=document.getElementById('redirect-action');a.href=dest.toString();a.textContent='Abrir '+product.name+' ↗';
+        document.getElementById('redirect-title').textContent='Você está indo para '+product.name;
+        document.getElementById('redirect-copy').textContent='Código informado: '+codeFromPath+'. A comissão só é reconhecida após validação da assinatura.';
+        setTimeout(()=>location.replace(dest.toString()),1000);
+      }
+    }
+  })();
+  </script>
+</body></html>
