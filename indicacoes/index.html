@@ -25,12 +25,17 @@
     .redirect{display:none;max-width:640px;margin:80px auto 20px;padding:35px;background:#152536;border-radius:22px;border:1px solid #354b63;text-align:center}
     @media(max-width:800px){.navlinks a:not(.btn){display:none}.nav{height:67px}.hero{grid-template-columns:1fr;padding-top:55px}.visual{transform:none;max-width:520px}.products,.steps{grid-template-columns:1fr}.panel{grid-template-columns:1fr;padding:24px}.section-head{display:block}.hero h1{letter-spacing:-1.5px}.hero{gap:22px}section{padding:45px 0}}
     @media(max-width:440px){.navlinks .btn{padding:11px 12px;font-size:12px}.brand{font-size:14px}.brandlogo{height:38px;width:38px}.inputrow{flex-direction:column}.actions .btn{width:100%}.visual-value{font-size:38px}}
+
+    .tabs{display:flex;gap:7px;margin-bottom:19px;padding:5px;background:#091825;border:1px solid #38556b;border-radius:14px}.tab{flex:1;padding:12px 8px;border:0;border-radius:10px;background:transparent;color:#9bb1c6;font-weight:750}.tab.active{background:#244c46;color:#bbffe0}
+    .auth-form{display:flex;flex-direction:column;gap:9px}.auth-form label{font-size:13px;font-weight:650;color:#d7e6fa}.auth-form input:not([type="checkbox"]){border:1px solid #456075;border-radius:12px;background:#091725;padding:14px;color:#edf8ff;outline:none;width:100%;min-width:0}.auth-form input:focus{border-color:#93efc2}.auth-form .btn{margin-top:10px}
+    .auth-form[hidden],#auth-view[hidden],#partner-view[hidden],.form-message[hidden]{display:none!important}.consent{display:flex;align-items:flex-start;gap:9px;margin-top:8px}.consent input{margin-top:4px;accent-color:#8bf1bd}.consent span{font-size:12px;font-weight:400;line-height:1.5;color:#a8bacd}.form-message{padding:12px;border:1px solid #698ca0;background:#183346;border-radius:11px;font-size:13px;margin-top:17px}.form-message.error{color:#ffd1d1;border-color:#a75162;background:#44232e}.form-message.success{color:#b0f8c5;border-color:#367a57;background:#14392a}
+    .partner-bar{display:flex;justify-content:space-between;gap:14px;align-items:start}.partner-bar h3{margin:9px 0 3px}.code-card{padding:16px;margin:22px 0 16px;border-radius:14px;background:#0b1b2b;border:1px solid #416779;display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap}.code-card strong{font-size:18px;letter-spacing:1px;color:#a3ffd2;overflow-wrap:anywhere}.ref-link{overflow:hidden}
   </style>
 </head>
 <body>
-  <header><nav class="nav wrap"><a href="/" class="brand"><span class="brandlogo">P<span style="opacity:.6">Z</span></span><span>Central de <span style="color:#a4f8cf">Indicações</span></span></a><div class="navlinks"><a href="#produtos">Nossos sistemas</a><a href="#como-funciona">Como funciona</a><a href="#meucodigo" class="btn btn-outline">Tenho um código</a></div></nav></header>
+  <header><nav class="nav wrap"><a href="/" class="brand"><span class="brandlogo">P<span style="opacity:.6">Z</span></span><span>Central de <span style="color:#a4f8cf">Indicações</span></span></a><div class="navlinks"><a href="#produtos">Nossos sistemas</a><a href="#como-funciona">Como funciona</a><a href="#meucodigo" class="btn btn-outline">Entrar / Cadastrar</a></div></nav></header>
   <main id="main">
-    <div class="wrap hero"><div><span class="eyebrow"><span class="dot"></span> Indique. Compartilhe. Cresça.</span><h1>Seu contato pode valer uma <em>recompensa.</em></h1><p class="lead">Conhece alguém que precisa de um sistema para o negócio? Recomende as soluções da Ponto Zero e participe do programa de indicações.</p><div class="actions"><a class="btn btn-primary" id="join" href="https://wa.me/5542998319122?text=Ol%C3%A1%21%20Quero%20participar%20da%20Central%20de%20Indica%C3%A7%C3%B5es%20da%20Ponto%20Zero." target="_blank" rel="noopener noreferrer">Quero ser indicador ↗</a><a class="btn btn-ghost" href="#como-funciona">Entender o programa ↓</a></div><p class="fine">O cadastro de indicadores é feito com nossa equipe nesta fase inicial. Comissão apenas após assinatura validada.</p></div>
+    <div class="wrap hero"><div><span class="eyebrow"><span class="dot"></span> Indique. Compartilhe. Cresça.</span><h1>Seu contato pode valer uma <em>recompensa.</em></h1><p class="lead">Conhece alguém que precisa de um sistema para o negócio? Recomende as soluções da Ponto Zero e participe do programa de indicações.</p><div class="actions"><a class="btn btn-primary" id="join" href="#meucodigo">Cadastre-se gratuitamente →</a><a class="btn btn-ghost" href="#como-funciona">Entender o programa ↓</a></div><p class="fine">Cadastro gratuito e automático. Comissão somente depois de assinatura paga e validada.</p></div>
       <div class="visual" aria-label="Exemplo de ganho com cinco indicações de Agende Barber"><div class="visual-top"><span class="visual-label">Potencial de indicação · Agende Barber</span><span class="pill">R$ 15 por assinatura</span></div><div class="visual-value">R$ 75,00</div><span class="visual-label">Exemplo com 5 novas assinaturas elegíveis</span><div class="sparkline" aria-hidden="true"><i style="height:27%"></i><i style="height:43%"></i><i style="height:39%"></i><i style="height:68%"></i><i style="height:52%"></i><i style="height:81%"></i><i style="height:100%"></i><i style="height:78%"></i></div><div class="visual-grid"><div class="metric"><b>1ª mensalidade</b><span>Recompensa não recorrente</span></div><div class="metric"><b>Pix</b><span>Pagamento após validação</span></div></div></div>
     </div>
     <section id="produtos" class="wrap"><div class="section-head"><div><span class="kicker">Soluções para indicar</span><h2>Uma central, vários sistemas.</h2><p class="secondary">Cada produto pode ter suas próprias regras de comissionamento.</p></div></div><div class="products">
@@ -38,65 +43,184 @@
       <article class="card"><div class="product-icon" style="background:#3e2b1b">🍔</div><div><h3>Zappi Food</h3><p>Cardápio digital, delivery e gestão de pedidos sem comissão por venda.</p></div><div class="reward"><div><span>Recompensa</span><br><strong style="font-size:18px;color:#b7c5d7">A definir</strong></div><span class="tag" style="color:#cfdeec;background:#263443;border-color:#3e5268">Em configuração</span></div><a class="btn btn-outline" href="#meucodigo" data-prefill="zappi-food">Gerar meu link →</a></article>
       <article class="card"><div class="product-icon" style="background:#1b3153">📊</div><div><h3>Finança Exata</h3><p>Controle financeiro simples com inteligência e relatórios.</p></div><div class="reward"><div><span>Recompensa</span><br><strong style="font-size:18px;color:#b7c5d7">A definir</strong></div><span class="tag" style="color:#cfdeec;background:#263443;border-color:#3e5268">Em configuração</span></div><a class="btn btn-outline" href="#meucodigo" data-prefill="financa-exata">Consultar indicação →</a></article>
     </div></section>
-    <section class="wrap" id="como-funciona"><span class="kicker">É simples</span><h2>Três passos para indicar.</h2><div class="steps" style="margin-top:26px"><div class="step"><b>01</b><h3>Peça seu cadastro</h3><p>Fale com nossa equipe para receber um código pessoal vinculado aos seus dados.</p></div><div class="step"><b>02</b><h3>Compartilhe o link</h3><p>Escolha qual sistema divulgar e envie o link personalizado para seus amigos.</p></div><div class="step"><b>03</b><h3>Valide a assinatura</h3><p>A recompensa depende da contratação e confirmação do pagamento. O crédito não é gerado por simples clique ou teste.</p></div></div></section>
-    <section class="wrap" id="meucodigo"><div class="panel"><div><span class="kicker">Área do indicador</span><h2>Já recebeu seu código?</h2><p class="secondary">Digite abaixo para montar seus links personalizados. O código deve ter sido autorizado pela nossa equipe; gerar um link não equivale a registrar uma comissão.</p><a class="btn btn-ghost" href="https://wa.me/5542998319122?text=Ol%C3%A1%21%20Preciso%20solicitar%20ou%20recuperar%20meu%20c%C3%B3digo%20de%20indica%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">Solicitar ou recuperar código ↗</a></div><div><label for="code" style="font-size:13px;font-weight:750">Seu código de indicador</label><form id="code-form" class="inputrow" style="margin-top:10px"><input id="code" maxlength="24" placeholder="EX: JOAO123" required pattern="[A-Za-z0-9_-]{3,24}" autocomplete="off"/><button class="btn btn-primary" type="submit">Gerar links</button></form><div class="links-output" id="links-output"><p class="note">Compartilhe os links abaixo. A atribuição definitiva depende da integração com o cadastro e o pagamento de cada sistema.</p><div id="links-list"></div></div></div></div></section>
+    <section class="wrap" id="como-funciona"><span class="kicker">É simples</span><h2>Três passos para indicar.</h2><div class="steps" style="margin-top:26px"><div class="step"><b>01</b><h3>Peça seu cadastro</h3><p>Crie sua conta gratuitamente com nome, e-mail, WhatsApp e senha. Seu código é gerado automaticamente.</p></div><div class="step"><b>02</b><h3>Compartilhe o link</h3><p>Escolha qual sistema divulgar e envie o link personalizado para seus amigos.</p></div><div class="step"><b>03</b><h3>Valide a assinatura</h3><p>A recompensa depende da contratação e confirmação do pagamento. O crédito não é gerado por simples clique ou teste.</p></div></div></section>
+    <section class="wrap" id="meucodigo">
+      <div class="panel">
+        <div>
+          <span class="kicker">Área do indicador</span>
+          <h2>Comece a indicar hoje.</h2>
+          <p class="secondary">Crie sua conta grátis, receba seu código único automaticamente e compartilhe seus links do Agende Barber e dos outros sistemas.</p>
+          <p class="note">A Central gera os códigos e links. A confirmação de assinaturas e o cálculo automático de comissões serão liberados após a integração de cobrança de cada produto.</p>
+        </div>
+        <div>
+          <div id="auth-view">
+            <div class="tabs" role="tablist" aria-label="Acessar Central de Indicações">
+              <button type="button" id="tab-register" class="tab active" aria-selected="true">Criar conta</button>
+              <button type="button" id="tab-login" class="tab" aria-selected="false">Já tenho conta</button>
+            </div>
+            <form id="signup-form" class="auth-form">
+              <label for="signup-name">Nome completo</label>
+              <input id="signup-name" name="name" required minlength="3" maxlength="120" autocomplete="name" placeholder="Seu nome completo"/>
+              <label for="signup-email">E-mail</label>
+              <input id="signup-email" type="email" name="email" required maxlength="254" autocomplete="email" placeholder="seu@email.com"/>
+              <label for="signup-phone">WhatsApp com DDD</label>
+              <input id="signup-phone" type="tel" name="phone" required inputmode="tel" autocomplete="tel" placeholder="(42) 99999-9999"/>
+              <label for="signup-password">Crie uma senha</label>
+              <input id="signup-password" type="password" name="password" required minlength="10" maxlength="128" autocomplete="new-password" placeholder="Pelo menos 10 caracteres"/>
+              <label class="consent"><input id="signup-consent" type="checkbox" required/> <span>Concordo com o cadastro e uso dos meus dados para operar o programa de indicações. As comissões dependem de assinatura paga e validada.</span></label>
+              <button type="submit" id="signup-button" class="btn btn-primary">Criar minha conta grátis →</button>
+            </form>
+            <form id="login-form" class="auth-form" hidden>
+              <label for="login-email">E-mail cadastrado</label>
+              <input id="login-email" type="email" name="email" required autocomplete="email" placeholder="seu@email.com"/>
+              <label for="login-password">Senha</label>
+              <input id="login-password" type="password" name="password" required autocomplete="current-password" placeholder="Sua senha"/>
+              <button type="submit" id="login-button" class="btn btn-primary">Entrar na minha conta →</button>
+              <p class="note">Esqueceu a senha? <a href="https://wa.me/5542998319122?text=Preciso%20recuperar%20o%20acesso%20%C3%A0%20Central%20de%20Indica%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer" style="color:#a4f8cf">Solicite recuperação ao suporte</a>.</p>
+            </form>
+          </div>
+          <div id="partner-view" hidden>
+            <div class="partner-bar"><div><span class="kicker">Meu painel</span><h3 id="partner-name">Meu perfil</h3><p id="partner-email" class="note"></p></div><button type="button" class="smallbtn" id="logout-button">Sair</button></div>
+            <div class="code-card"><div class="note">Seu código exclusivo de indicador</div><strong id="partner-code"></strong><button type="button" class="smallbtn" id="copy-code">Copiar código</button></div>
+            <p class="note">Seus links personalizados</p>
+            <div id="links-list" aria-live="polite"></div>
+            <p class="note">As conversões e comissões ainda não estão conectadas ao pagamento dos produtos. Nenhuma comissão é liberada apenas por gerar ou compartilhar um link.</p>
+          </div>
+          <p id="auth-message" class="form-message" role="status" aria-live="polite" hidden></p>
+        </div>
+      </div>
+    </section>
   </main>
   <aside id="redirect" class="redirect"><h2 id="redirect-title">Abrindo sistema...</h2><p id="redirect-copy" class="secondary">Se você não for redirecionado, utilize o botão abaixo.</p><a id="redirect-action" class="btn btn-primary" href="/">Continuar ↗</a></aside>
   <footer><div class="wrap footerinner"><span>© 2026 Ponto Zero · Central de Indicações</span><span>Programa sujeito à validação de elegibilidade, pagamentos e regras de cada produto.</span></div></footer><div class="toast" id="toast" role="status">Link copiado!</div>
   <script>
   (function(){
-    'use strict';
+    "use strict";
+    const api="https://slryivvvzrirgjfbumps.supabase.co/functions/v1/referral-portal";
+    const tokenKey="apz_referral_session_v1";
     const products=[
-      {slug:'agende-barber',name:'Agende Barber',url:'https://agendebarber.com/'},
-      {slug:'zappi-food',name:'Zappi Food',url:'https://zappifood.com/'},
-      {slug:'financa-exata',name:'Finança Exata',url:null}
+      {slug:"agende-barber",name:"Agende Barber",url:"https://agendebarber.com/"},
+      {slug:"zappi-food",name:"Zappi Food",url:"https://zappifood.com/"},
+      {slug:"financa-exata",name:"Finança Exata",url:null}
     ];
-    const clean=v=>(v||'').trim().toUpperCase().replace(/[^A-Z0-9_-]/g,'').slice(0,24);
-    const toast=document.getElementById('toast');
-    const notify=t=>{toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2500)};
-    const parts=location.pathname.split('/').filter(Boolean);
-    const productSlug=parts[0]==='p' ? parts[1] : null;
-    const codeFromPath=parts[0]==='p' ? clean(parts[2]) : (parts[0]==='indicar'?clean(parts[1]):'');
-    const queryCode=clean(new URLSearchParams(location.search).get('ref'));
-    const initialCode=codeFromPath||queryCode;
-    if(initialCode) document.getElementById('code').value=initialCode;
-    function buildLinks(code){
-      const list=document.getElementById('links-list');list.textContent='';
+    const clean=v=>String(v||"").trim().toUpperCase().replace(/[^A-Z0-9_-]/g,"").slice(0,24);
+    const toast=document.getElementById("toast");
+    const notify=t=>{toast.textContent=t;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2600)};
+    const parts=location.pathname.split("/").filter(Boolean);
+    const productSlug=parts[0]==="p"?parts[1]:null;
+    const codeFromPath=parts[0]==="p"?clean(parts[2]):(parts[0]==="indicar"?clean(parts[1]):"");
+    function getToken(){try{return localStorage.getItem(tokenKey)||""}catch{return ""}}
+    function setToken(value){try{if(value)localStorage.setItem(tokenKey,value);else localStorage.removeItem(tokenKey)}catch{}}
+    function message(value,type="error"){
+      const el=document.getElementById("auth-message");
+      if(!value){el.hidden=true;el.textContent="";return}
+      el.textContent=value;el.className="form-message "+type;el.hidden=false;
+    }
+    async function request(action,data={},token=""){
+      const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),18000);
+      try{
+        const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json",...(token?{"Authorization":"Bearer "+token}:{})},body:JSON.stringify({action,...data}),signal:controller.signal});
+        const payload=await response.json().catch(()=>({error:"Não foi possível interpretar a resposta."}));
+        if(!response.ok)throw new Error(payload.error||"Ocorreu um erro ao processar seu pedido.");
+        return payload;
+      }finally{clearTimeout(timeout)}
+    }
+    function codeLink(code,slug){return location.origin+"/p/"+encodeURIComponent(slug)+"/"+encodeURIComponent(code)}
+    function renderLinks(code){
+      const list=document.getElementById("links-list");list.textContent="";
       products.forEach(p=>{
-        const link=location.origin+'/p/'+encodeURIComponent(p.slug)+'/'+encodeURIComponent(code);
-        const item=document.createElement('div');item.className='ref-link';
-        const inp=document.createElement('input');inp.readOnly=true;inp.value=link;inp.setAttribute('aria-label','Link para '+p.name);
-        const btn=document.createElement('button');btn.className='smallbtn';btn.textContent='Copiar';btn.type='button';
-        btn.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(link);notify('Link de '+p.name+' copiado!')}catch(e){inp.select();notify('Selecione e copie o link')}});
+        const link=codeLink(code,p.slug),item=document.createElement("div"),inp=document.createElement("input"),btn=document.createElement("button");
+        item.className="ref-link";
+        inp.readOnly=true;inp.value=link;inp.setAttribute("aria-label","Link de "+p.name);
+        btn.className="smallbtn";btn.type="button";btn.textContent="Copiar";
+        btn.addEventListener("click",()=>copy(link,"Link copiado!"));
         item.append(inp,btn);list.append(item);
       });
-      document.getElementById('links-output').style.display='block';
     }
-    document.getElementById('code-form').addEventListener('submit',ev=>{
-      ev.preventDefault();const code=clean(document.getElementById('code').value);
-      if(!/^[A-Z0-9_-]{3,24}$/.test(code))return notify('Informe um código válido.');
-      buildLinks(code);
+    async function copy(text,ok){
+      try{await navigator.clipboard.writeText(text);notify(ok)}catch{notify("Não foi possível copiar automaticamente.")}
+    }
+    function showPartner(p){
+      document.getElementById("auth-view").hidden=true;
+      document.getElementById("partner-view").hidden=false;
+      document.getElementById("partner-name").textContent=p.name;
+      document.getElementById("partner-email").textContent=p.email;
+      document.getElementById("partner-code").textContent=p.code;
+      renderLinks(p.code);message("");
+    }
+    function showAuth(login=false){
+      document.getElementById("partner-view").hidden=true;
+      document.getElementById("auth-view").hidden=false;
+      document.getElementById("tab-login").classList.toggle("active",login);
+      document.getElementById("tab-register").classList.toggle("active",!login);
+      document.getElementById("tab-login").setAttribute("aria-selected",String(login));
+      document.getElementById("tab-register").setAttribute("aria-selected",String(!login));
+      document.getElementById("signup-form").hidden=login;
+      document.getElementById("login-form").hidden=!login;message("");
+    }
+    document.getElementById("tab-login").addEventListener("click",()=>showAuth(true));
+    document.getElementById("tab-register").addEventListener("click",()=>showAuth(false));
+    async function submit(form,button,action,data){
+      if(button.disabled)return;
+      button.disabled=true;button.textContent=action==="register"?"Criando conta…":"Entrando…";message("");
+      try{
+        const response=await request(action,data);
+        if(!response.partner||!response.token)throw Error("Cadastro não retornou uma sessão válida.");
+        setToken(response.token);form.reset();showPartner(response.partner);
+        notify(action==="register"?"Cadastro concluído! Seu código já está disponível.":"Bem-vindo de volta!");
+      }catch(e){message(e instanceof Error?(e.name==="AbortError"?"A conexão demorou demais. Tente novamente.":e.message):"Falha inesperada.");}
+      finally{button.disabled=false;button.textContent=action==="register"?"Criar minha conta grátis →":"Entrar na minha conta →"}
+    }
+    document.getElementById("signup-form").addEventListener("submit",e=>{
+      e.preventDefault();
+      const form=e.currentTarget;
+      submit(form,document.getElementById("signup-button"),"register",{
+        name:document.getElementById("signup-name").value,
+        email:document.getElementById("signup-email").value,
+        phone:document.getElementById("signup-phone").value,
+        password:document.getElementById("signup-password").value,
+        consent:document.getElementById("signup-consent").checked
+      });
     });
-    document.querySelectorAll('[data-prefill]').forEach(el=>el.addEventListener('click',()=>{document.getElementById('code').focus()}));
-    if(initialCode && !productSlug)buildLinks(initialCode);
+    document.getElementById("login-form").addEventListener("submit",e=>{
+      e.preventDefault();
+      const form=e.currentTarget;
+      submit(form,document.getElementById("login-button"),"login",{
+        email:document.getElementById("login-email").value,password:document.getElementById("login-password").value
+      });
+    });
+    document.getElementById("logout-button").addEventListener("click",()=>{
+      const token=getToken();setToken("");showAuth(true);
+      if(token)request("logout",{},token).catch(()=>{});
+    });
+    document.getElementById("copy-code").addEventListener("click",()=>copy(document.getElementById("partner-code").textContent,"Código copiado!"));
+    document.querySelectorAll("[data-prefill]").forEach(el=>el.addEventListener("click",()=>{
+      const preferred=el.dataset.prefill;
+      const node=Array.from(document.querySelectorAll("#links-list .ref-link")).find((_,i)=>products[i].slug===preferred);
+      if(node){node.scrollIntoView({behavior:"smooth",block:"center"})}
+    }));
+    const savedToken=getToken();
+    if(savedToken)request("me",{},savedToken).then(data=>{if(data.partner)showPartner(data.partner)}).catch(()=>{setToken("");showAuth(true)});
     if(productSlug){
       const product=products.find(p=>p.slug===productSlug);
-      const main=document.getElementById('main'),panel=document.getElementById('redirect');
-      main.style.display='none';panel.style.display='block';
-      if(!product || !/^[A-Z0-9_-]{3,24}$/.test(codeFromPath)){
-        document.getElementById('redirect-title').textContent='Link de indicação inválido';
-        document.getElementById('redirect-copy').textContent='Revise o endereço ou solicite um link atualizado.';
+      const panel=document.getElementById("redirect");
+      document.getElementById("main").style.display="none";panel.style.display="block";
+      if(!product||!/^[A-Z0-9_-]{3,24}$/.test(codeFromPath)){
+        document.getElementById("redirect-title").textContent="Link de indicação inválido";
+        document.getElementById("redirect-copy").textContent="Revise o endereço ou solicite um link atualizado.";
       }else if(!product.url){
-        document.getElementById('redirect-title').textContent=product.name+' · integração em preparação';
-        document.getElementById('redirect-copy').textContent='A contratação por indicação ainda não está liberada para este sistema. Entre em contato com a equipe.';
+        document.getElementById("redirect-title").textContent=product.name+" · integração em preparação";
+        document.getElementById("redirect-copy").textContent="A contratação por indicação ainda não está liberada para este sistema.";
       }else{
-        const dest=new URL(product.url);dest.searchParams.set('ref',codeFromPath);
-        dest.searchParams.set('utm_source','central-indicacoes');
-        dest.searchParams.set('utm_medium','referral');
-        const a=document.getElementById('redirect-action');a.href=dest.toString();a.textContent='Abrir '+product.name+' ↗';
-        document.getElementById('redirect-title').textContent='Você está indo para '+product.name;
-        document.getElementById('redirect-copy').textContent='Código informado: '+codeFromPath+'. A comissão só é reconhecida após validação da assinatura.';
-        setTimeout(()=>location.replace(dest.toString()),1000);
+        const destination=new URL(product.url);
+        destination.searchParams.set("ref",codeFromPath);
+        destination.searchParams.set("utm_source","central-indicacoes");
+        destination.searchParams.set("utm_medium","referral");
+        const action=document.getElementById("redirect-action");
+        action.href=destination.toString();action.textContent="Abrir "+product.name+" ↗";
+        document.getElementById("redirect-title").textContent="Você está indo para "+product.name;
+        document.getElementById("redirect-copy").textContent="Código de indicação: "+codeFromPath+". A comissão depende da confirmação do pagamento.";
+        setTimeout(()=>location.replace(destination.toString()),1000);
       }
     }
   })();
