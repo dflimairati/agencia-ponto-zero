@@ -4,7 +4,13 @@ const allowedOrigins = new Set([
   "https://central-indicacoes.vercel.app",
   "https://central-indicacoes-dflimairatis-projects.vercel.app",
   "https://indicacoes.agendebarber.com",
+  "https://agendebarber.com",
+  "https://www.agendebarber.com",
+  "https://barbershop-elite-app.vercel.app",
 ]);
+const TERMS_VERSION="AB-2026-10-19.1";
+const TERMS_HASH="75c466d36c93cac7daf63795f0df4b29e9dbd368089baee96fb986ab75530bd3";
+const PARTNER_FIELDS="id,full_name,email,phone,referral_code,partner_status,created_at,pix_type,pix_key,pix_holder,terms_version,consent_at";
 const encoder = new TextEncoder();
 const jsonHeaders = (origin:string|null) => ({
   "Content-Type": "application/json; charset=utf-8",
@@ -33,7 +39,7 @@ function constantTimeEqual(a:string,b:string):boolean{
   let d=0;for(let i=0;i<a.length;i++)d|=a.charCodeAt(i)^b.charCodeAt(i);return d===0;
 }
 function partnerView(p:any){
-  return {name:p.full_name,email:p.email,phone:p.phone,code:p.referral_code,status:p.partner_status,created_at:p.created_at};
+  return {name:p.full_name,email:p.email,phone:p.phone,code:p.referral_code,status:p.partner_status,created_at:p.created_at,pix_type:p.pix_type,pix_key:p.pix_key,pix_holder:p.pix_holder,terms_version:p.terms_version,consent_at:p.consent_at,needs_terms:p.terms_version!==TERMS_VERSION};
 }
 const connection=createClient(Deno.env.get("SUPABASE_URL")||"",Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")||"",{auth:{persistSession:false,autoRefreshToken:false}});
 async function newSession(partnerId:string):Promise<{token:string,expires_at:string}>{
@@ -48,9 +54,35 @@ async function getPartner(req:Request){
   if(!/^[0-9a-f]{64}$/.test(token))return null;
   const {data:session,error}=await connection.from("referral_partner_sessions").select("id,partner_id,expires_at,revoked_at").eq("token_hash",await sha256(token)).maybeSingle();
   if(error||!session||session.revoked_at||Date.parse(session.expires_at)<Date.now())return null;
-  const {data:partner}=await connection.from("referral_partners").select("id,full_name,email,phone,referral_code,partner_status,created_at").eq("id",session.partner_id).maybeSingle();
+  const {data:partner}=await connection.from("referral_partners").select(PARTNER_FIELDS).eq("id",session.partner_id).maybeSingle();
   return partner&&partner.partner_status==="active"?{partner,session}:null;
 }
+
+function validatePix(input:any){
+ const type=String(input.pix_type||"");let key=String(input.pix_key||"").trim();const holder=String(input.pix_holder||"").trim().replace(/\s+/g," ");
+ if(holder.length<5||holder.length>120||!holder.includes(" "))throw Error("Informe o nome completo do titular do Pix.");
+ if(type==="email"){key=key.toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(key)||key.length>254)throw Error("Chave Pix de e-mail inválida.");}
+ else if(type==="phone"){key=key.replace(/\D/g,"");if(key.length===10||key.length===11)key="55"+key;if(!/^55\d{10,11}$/.test(key))throw Error("Informe o telefone Pix com DDD.");key="+"+key;}
+ else if(type==="random"){key=key.toLowerCase();if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(key))throw Error("Chave aleatória Pix inválida.");}
+ else if(type==="cpf"){
+  key=key.replace(/\D/g,"");if(!/^\d{11}$/.test(key)||/^(\d)\1+$/.test(key))throw Error("CPF Pix inválido.");
+  for(let n=9;n<11;n++){let sum=0;for(let i=0;i<n;i++)sum+=Number(key[i])*(n+1-i);const digit=(sum*10)%11%10;if(digit!==Number(key[n]))throw Error("CPF Pix inválido.");}
+ }else throw Error("Escolha o tipo de chave Pix.");
+ if(input.pix_owner!==true)throw Error("Confirme que a chave Pix pertence a você.");
+ return {pix_type:type,pix_key:key,pix_holder:holder};
+}
+async function acceptance(req:Request,input:any){
+ if(input.consent!==true||input.adult!==true||input.terms_version!==TERMS_VERSION)throw Error("Leia e aceite a versão atual dos termos e confirme que tem 18 anos ou mais.");
+ const ip=req.headers.get("cf-connecting-ip")||req.headers.get("x-real-ip")||(req.headers.get("x-forwarded-for")||"").split(",")[0].trim();
+ return {terms_version:TERMS_VERSION,terms_hash:TERMS_HASH,consent_at:new Date().toISOString(),consent_ip_hash:await sha256(ip+"|referral-acceptance|"),consent_user_agent:(req.headers.get("user-agent")||"").slice(0,500)};
+}
+async function getAdmin(req:Request){
+ const token=(req.headers.get("authorization")||"").replace(/^Bearer\s+/i,"");
+ const {data,error}=await connection.auth.getUser(token);if(error||!data.user)return null;
+ const {data:role,error:roleError}=await connection.from("user_roles").select("user_id").eq("user_id",data.user.id).eq("role","admin").maybeSingle();
+ return !roleError&&role?data.user.id:null;
+}
+
 Deno.serve(async(req:Request)=>{
   const origin=req.headers.get("origin");
   if(req.method==="OPTIONS"){
@@ -65,6 +97,49 @@ Deno.serve(async(req:Request)=>{
   if(!input||typeof input!=="object")return answer(origin,400,{error:"Dados inválidos."});
   const action=String(input.action||"");
   try{
+    if(action==="validate_code"){
+      const code=String(input.code||"").trim().toUpperCase();
+      const {data,error}=await connection.from("referral_partners").select("referral_code").eq("referral_code",code).eq("partner_status","active").eq("terms_version",TERMS_VERSION).maybeSingle();
+      if(error)throw error;
+      return answer(origin,200,{valid:!!data});
+    }
+    if(action.startsWith("admin_")){
+      const admin=await getAdmin(req);if(!admin)return answer(origin,403,{error:"Acesso exclusivo do painel master."});
+      if(action==="admin_list"){
+        const page=Math.max(0,Math.min(100000,Number(input.page)||0));
+        const {data,error,count}=await connection.from("referral_conversions").select("*,partner:referral_partners("+PARTNER_FIELDS+",terms_hash)",{count:"exact"}).order("created_at",{ascending:false}).range(page*50,page*50+49);
+        if(error)throw error;
+        const {data:partners,error:pe}=await connection.from("referral_partners").select(PARTNER_FIELDS).order("created_at",{ascending:false}).range(page*50,page*50+49);if(pe)throw pe;
+        return answer(origin,200,{conversions:data,partners,total:count,page});
+      }
+      if(action==="admin_history"){
+        const id=String(input.id||"");
+        const {data:r,error:re}=await connection.from("referral_conversions").select("partner_id").eq("id",id).single();if(re)throw re;
+        const {data:events,error:ee}=await connection.from("referral_audit").select("action,details,created_at,actor_id").eq("conversion_id",id).order("created_at");if(ee)throw ee;
+        const {data:acceptances,error:ae}=await connection.from("referral_acceptances").select("terms_version,terms_hash,accepted_at").eq("partner_id",r.partner_id).order("accepted_at");if(ae)throw ae;
+        return answer(origin,200,{events,acceptances});
+      }
+      if(action==="admin_transition"){
+        if(input.confirmed!==true)return answer(origin,400,{error:"Confirme a conferência dos dados."});
+        const {data,error}=await connection.rpc("referral_admin_transition",{p_id:input.id,p_actor:admin,p_action:input.transition,p_reference:input.reference||null,p_paid_at:input.paid_at||null,p_reason:input.reason||null,p_pix_key:input.pix_key||null});
+        if(error)return answer(origin,400,{error:error.message});
+        return answer(origin,200,{result:data});
+      }
+      return answer(origin,400,{error:"Ação inválida."});
+    }
+    if(action==="dashboard"||action==="update_profile"){
+      const auth=await getPartner(req);if(!auth)return answer(origin,401,{error:"Sessão encerrada. Entre novamente."});
+      if(action==="update_profile"){
+        let patch:any;try{patch={...validatePix(input),...await acceptance(req,input)}}catch(e){return answer(origin,400,{error:(e as Error).message})}
+        // Reauthenticate before changing financial details.
+        const {data:secret,error:se}=await connection.from("referral_partners").select("password_salt,password_hash,password_iterations").eq("id",auth.partner.id).single();if(se)throw se;
+        if(!constantTimeEqual(await derive(String(input.password||""),secret.password_salt,secret.password_iterations),secret.password_hash))return answer(origin,401,{error:"Senha atual incorreta. Os dados Pix não foram alterados."});
+        const {data,error}=await connection.from("referral_partners").update({...patch,updated_at:new Date().toISOString()}).eq("id",auth.partner.id).select(PARTNER_FIELDS).single();if(error)throw error;
+        return answer(origin,200,{partner:partnerView(data)});
+      }
+      const {data,error}=await connection.from("referral_conversions").select("id,shop_name,status,commission_cents,created_at,eligible_at,payout_due_at,paid_at,reason").eq("partner_id",auth.partner.id).order("created_at",{ascending:false}).limit(200);if(error)throw error;
+      return answer(origin,200,{conversions:data,limit:200});
+    }
     if(action==="me"){
       const auth=await getPartner(req);
       return auth?answer(origin,200,{partner:partnerView(auth.partner)}):answer(origin,401,{error:"Sessão encerrada. Entre novamente."});
@@ -94,9 +169,10 @@ Deno.serve(async(req:Request)=>{
       if(!/^55[0-9]{10,11}$/.test(phone))return answer(origin,400,{error:"Informe um WhatsApp com DDD válido."});
       if(password.length<10||password.length>128)return answer(origin,400,{error:"Crie uma senha com 10 a 128 caracteres."});
       if(!consent)return answer(origin,400,{error:"É necessário aceitar os termos do programa."});
+      let profile:any;try{profile={...validatePix(input),...await acceptance(req,input)}}catch(e){return answer(origin,400,{error:(e as Error).message})}
       const salt=randHex(20);
       const hash=await derive(password,salt);
-      const {data:partner,error}=await connection.from("referral_partners").insert({full_name,email,phone,password_salt:salt,password_hash:hash,consent_at:new Date().toISOString()}).select("id,full_name,email,phone,referral_code,partner_status,created_at").single();
+      const {data:partner,error}=await connection.from("referral_partners").insert({full_name,email,phone,password_salt:salt,password_hash:hash,...profile}).select(PARTNER_FIELDS).single();
       if(error){
         if(error.code==="23505")return answer(origin,409,{error:"E-mail ou WhatsApp já cadastrado. Entre com sua conta."});
         throw error;
@@ -105,7 +181,7 @@ Deno.serve(async(req:Request)=>{
       return answer(origin,201,{partner:partnerView(partner),...session});
     }
     if(password.length>128)return answer(origin,401,{error:"E-mail ou senha incorretos."});
-    const {data:partner,error}=await connection.from("referral_partners").select("id,full_name,email,phone,referral_code,partner_status,created_at,password_salt,password_hash,password_iterations").eq("email",email).maybeSingle();
+    const {data:partner,error}=await connection.from("referral_partners").select(PARTNER_FIELDS+",password_salt,password_hash,password_iterations").eq("email",email).maybeSingle();
     if(error)throw error;
     if(!partner)return answer(origin,401,{error:"E-mail ou senha incorretos."});
     const hash=await derive(password,partner.password_salt,partner.password_iterations);
