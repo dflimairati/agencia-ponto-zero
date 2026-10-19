@@ -454,9 +454,10 @@
         const rows=Array.isArray(data.conversions)?data.conversions:[];
         const paid=rows.filter(row=>row.status==="paid");
         const approved=rows.filter(row=>row.status==="approved");
-        document.getElementById("partner-count").textContent=String(rows.length);
-        document.getElementById("partner-approved").textContent=brl(approved.reduce((sum,r)=>sum+(r.commission_cents||1500),0));
-        document.getElementById("partner-paid").textContent=brl(paid.reduce((sum,r)=>sum+(r.commission_cents||1500),0));
+        const summary=data.summary||{};
+        document.getElementById("partner-count").textContent=String(summary.total??rows.length);
+        document.getElementById("partner-approved").textContent=brl(summary.approved_cents??approved.reduce((sum,r)=>sum+(r.commission_cents||1500),0));
+        document.getElementById("partner-paid").textContent=brl(summary.paid_cents??paid.reduce((sum,r)=>sum+(r.commission_cents||1500),0));
         list.textContent="";
         if(!rows.length){
           const empty=element("div","referral-empty");
