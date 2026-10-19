@@ -90,6 +90,45 @@
   }
   @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
   .products{grid-template-columns:1fr;max-width:760px}.auth-form select{width:100%;padding:13px;border:1px solid #d3d9d0;border-radius:8px;background:#fff;color:#18221b;font:inherit}.consent a{color:#285a34;text-decoration:underline}.profile-details{margin-top:22px;border-top:1px solid #cad3c5;padding-top:18px}.profile-details summary{cursor:pointer;font-weight:700;margin-bottom:16px}.referrals-section{margin-top:28px}.referral-item{border:1px solid #c8d1c2;border-radius:10px;padding:16px;margin-top:12px;overflow-wrap:anywhere}.referral-item p{font-size:13px;margin:6px 0}.auth-surface{min-width:0}.auth-form input{min-width:0}#my-referrals{font-size:14px;line-height:1.6;margin-top:12px}.site-footer a{text-decoration:underline}
+
+  /* Acompanhamento real do indicador, acessível também no celular. */
+  .partner-guide{margin:20px 0;padding:18px;background:#e6f2df;border:1px solid #bdd4af;border-radius:16px;color:#284230}
+  .partner-guide strong{display:block;font:800 15px Manrope;line-height:1.5}.partner-guide p{margin:9px 0 0;font-size:13px;line-height:1.7;color:#4c644e}
+  .partner-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 26px}
+  .summary-tile{min-width:0;border-radius:14px;border:1px solid #d2dfcb;background:#fafdf9;padding:13px}
+  .summary-tile span{display:block;font-size:11px;line-height:1.4;font-weight:750;color:#536955;min-height:30px}
+  .summary-tile strong{display:block;color:#1d3e29;font:800 clamp(21px,3vw,29px) Manrope;letter-spacing:-1px;margin:6px 0}
+  .summary-tile small{display:block;color:#738577;line-height:1.4;font-size:10px}
+  .share-section{border-radius:18px;border:1px solid #c7d8be;background:#f4f9ef;padding:19px;margin:22px 0}
+  .share-section h4{font:800 18px/1.4 Manrope;letter-spacing:-.5px;margin:9px 0}
+  .share-section .code-card{margin:15px 0 13px}.share-section .micro{color:#596d5e}
+  .ref-link{flex-wrap:wrap}.ref-link input{flex-basis:100%;font-size:12px;padding:5px 3px}
+  .share-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+  .share-buttons button{min-height:45px;white-space:normal;border:1px solid #bed3b5;border-radius:10px;padding:8px 10px;font-size:12px;font-weight:800;color:#2b5131;background:#edf5e7}
+  .share-buttons .share-whatsapp{background:#1d7148;color:#fff;border-color:#1d7148}
+  .referrals-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+  .referrals-head h3{color:#233f2b;font:800 23px Manrope;margin:5px 0 0}
+  .progress-legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin:18px 0}
+  .progress-legend span{font-size:10px;color:#5a6c5c;line-height:1.4}
+  .progress-legend b{display:block;margin-bottom:5px;background:#dcead7;border-radius:50%;width:26px;height:26px;text-align:center;line-height:26px;color:#305b36}
+  .referral-item{border-color:#d4e0ce;background:#fff;border-radius:16px;padding:17px}
+  .referral-title{font:800 17px/1.4 Manrope;color:#223d2a;margin:0}
+  .referral-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .referral-status{border-radius:30px;font-size:10px;font-weight:800;padding:7px 10px;background:#e2ecd9;color:#2e6539;line-height:1.4}
+  .referral-status.wait{background:#f7edd7;color:#80521b}
+  .referral-status.risk{background:#fae9e5;color:#873b2c}
+  .referral-next{border:1px solid #dce9d5;border-radius:12px;background:#f5f8f2;padding:12px;margin-top:14px;font-size:12px;color:#50634f;line-height:1.65}
+  .referral-next b{display:block;color:#304d37;margin-bottom:3px;font-size:12px}
+  .referral-stages{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin:16px 0 0;padding:0}
+  .referral-stages li{font-size:10px;color:#778577;line-height:1.45;padding-top:11px;border-top:4px solid #dce4d8}
+  .referral-stages li.done{border-color:#4d974f;color:#355a3e;font-weight:750}
+  .referral-stages li.active{border-color:#c8a143;color:#7c632d;font-weight:750}
+  .referral-meta{color:#7a8b7c;font-size:11px;margin-top:10px}
+  .referral-empty{padding:24px 18px;border:1px dashed #abc9a0;border-radius:16px;background:#f6fbf3;text-align:center;color:#294633}
+  .referral-empty b{display:block;font:800 17px Manrope}.referral-empty p{margin:8px auto 0;font-size:12px;line-height:1.6;max-width:360px}
+  .partner-clarity{margin-top:18px!important;border-top:1px solid #d3e0ce;padding-top:16px}
+  @media(max-width:600px){.partner-guide{padding:15px}.partner-summary{grid-template-columns:1fr 1fr}.summary-tile:last-child{grid-column:1/-1}.summary-tile span{min-height:auto}.share-section{padding:14px}.progress-legend{grid-template-columns:repeat(2,1fr);row-gap:10px}.referrals-head h3{font-size:21px}.referral-stages li{font-size:9px}.referral-top{display:block}.referral-status{display:inline-block;margin-top:8px}}
+
   </style>
 </head>
 <body>
@@ -215,11 +254,21 @@
           </form>
         </div>
         <div id="partner-view" hidden>
-          <div class="partner-bar"><div><span class="auth-overline">Meu espaço</span><h3 id="partner-name">Bem-vindo!</h3><p class="micro" id="partner-email"></p></div><button type="button" class="smallbtn" id="logout-button">Sair</button></div>
-          <div class="code-card"><div><div class="micro">Seu código de indicador</div><strong id="partner-code"></strong></div><button type="button" class="smallbtn" id="copy-code">Copiar</button></div>
-          <p class="micro">Compartilhe os links abaixo com seus contatos:</p>
-          <div id="links-list" aria-live="polite"></div>
- <p id="profile-warning" class="micro" hidden>Complete os dados Pix e aceite o regulamento atual para compartilhar seu link.</p>
+          <div class="partner-bar"><div><span class="auth-overline">Meu painel de indicações</span><h3 id="partner-name">Bem-vindo!</h3><p class="micro" id="partner-email"></p></div><button type="button" class="smallbtn" id="logout-button">Sair</button></div>
+          <div class="partner-guide" role="note"><strong>Como saber se alguém se cadastrou pelo seu link?</strong><p>Quando o dono de uma barbearia concluir o cadastro com seu link, o nome da barbearia aparecerá aqui em <b>Minhas indicações</b>. Você verá cada etapa até o Pix, sem precisar perguntar ao suporte.</p></div>
+          <div class="partner-summary" aria-label="Resumo das suas indicações">
+            <div class="summary-tile"><span>Barbearias cadastradas</span><strong id="partner-count">—</strong><small>Cadastros feitos pelo seu link</small></div>
+            <div class="summary-tile"><span>Comissão aprovada para Pix</span><strong id="partner-approved">—</strong><small>Aguardando transferência</small></div>
+            <div class="summary-tile"><span>Já recebi por Pix</span><strong id="partner-paid">—</strong><small>Pagamentos registrados</small></div>
+          </div>
+          <section class="share-section" aria-label="Compartilhar seu link">
+            <span class="auth-overline">Seu link exclusivo</span>
+            <h4>Indique uma barbearia e ganhe R$ 15 por primeira assinatura elegível.</h4>
+            <p class="micro">Compartilhe o link completo. O cadastro ficará associado a você automaticamente.</p>
+            <div class="code-card"><div><div class="micro">Seu código</div><strong id="partner-code"></strong></div><button type="button" class="smallbtn" id="copy-code">Copiar código</button></div>
+            <div id="links-list" aria-live="polite"></div>
+            <p id="profile-warning" class="micro" hidden>Antes de compartilhar novamente, aceite o regulamento atual em "Meus dados Pix e aceite".</p>
+          </section>
  <details class="profile-details"><summary>Meus dados Pix e aceite</summary><p class="micro" id="acceptance-info"></p>
  <form id="pix-form" class="auth-form"><label for="profile-pix-type">Tipo de chave Pix</label>
  <select id="profile-pix-type" required><option value="">Selecione</option><option value="cpf">CPF</option><option value="email">E-mail</option><option value="phone">Celular</option><option value="random">Chave aleatória</option></select>
@@ -230,8 +279,13 @@
  <label class="consent"><input id="profile-consent" type="checkbox" required><span>Li e aceito o <a href="/termos.html" target="_blank" rel="noopener">regulamento e aviso de privacidade</a> (AB-2026-10-19.1). Entendo que R$ 15 são pagos uma vez, após a primeira mensalidade elegível, espera de 7 dias e conferência; Pix em até 10 dias úteis após liberação.</span></label>
  <label for="profile-password">Senha atual para confirmar alterações</label><input id="profile-password" type="password" required maxlength="128" autocomplete="current-password">
  <button id="pix-save" class="btn btn-bright" type="submit">Salvar dados Pix e aceite</button></form></details>
- <section class="referrals-section"><h3>Minhas indicações</h3><p class="micro">Últimas 200 indicações. O prazo do Pix aparece após a conferência da mensalidade.</p><button id="refresh-referrals" class="smallbtn" type="button">Atualizar</button><div id="my-referrals" aria-live="polite"></div></section>
-          <p class="micro" style="margin-top:18px">A equipe confere a primeira mensalidade e realiza o Pix manualmente. Cadastro ou clique não gera recompensa. Consulte o andamento abaixo.</p>
+ <section class="referrals-section">
+    <div class="referrals-head"><div><span class="auth-overline">Acompanhe pelo seu painel</span><h3>Minhas indicações</h3></div><button id="refresh-referrals" class="smallbtn" type="button">↻ Atualizar</button></div>
+    <p class="micro">Veja quem se cadastrou pelo seu link, se já pagou a primeira mensalidade e se seu Pix foi enviado.</p>
+    <div class="progress-legend"><span><b>1</b> Cadastrou</span><span><b>2</b> Pagou mensalidade</span><span><b>3</b> Aprovada</span><span><b>4</b> Pix recebido</span></div>
+    <div id="my-referrals" aria-live="polite" aria-atomic="true"></div>
+    <p class="micro partner-clarity">Visitas e cliques não contam como cadastro. O valor de R$ 15 só é liberado após a primeira mensalidade confirmada, 7 dias sem estorno e a aprovação. O Pix é feito manualmente e registrado neste painel.</p>
+  </section>
         </div>
         <p id="auth-message" class="form-message" role="status" aria-live="polite" hidden></p>
       </div>
