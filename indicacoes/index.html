@@ -138,7 +138,7 @@
       <span class="mark" aria-hidden="true">A<span style="opacity:.62">B</span></span>
       <span><span class="brand-title">Indique<span style="color:#d2fa74"> & </span>Ganhe</span><span class="brand-sub">Agende Barber</span></span>
     </a>
-    <div class="nav-actions"><a href="#produtos">O Agende Barber</a><a href="#como-funciona">Como funciona</a><a class="btn btn-bright" href="#meucodigo">Minha conta <span aria-hidden="true">↗</span></a></div>
+    <div class="nav-actions"><a href="#produtos">O Agende Barber</a><a href="#como-funciona">Como funciona</a><a class="btn btn-bright" href="/?entrar=1#meucodigo">Acompanhar indicações <span aria-hidden="true">↗</span></a></div>
   </nav>
 </header>
 <main id="main">
@@ -440,9 +440,11 @@
       return card;
     }
     let loadingReferrals=false;
+    let lastReferralRefresh=0;
     async function loadReferrals(){
       if(loadingReferrals)return;
       loadingReferrals=true;
+      lastReferralRefresh=Date.now();
       const list=document.getElementById("my-referrals");
       const refresh=document.getElementById("refresh-referrals");
       refresh.disabled=true;
@@ -469,6 +471,9 @@
       }finally{loadingReferrals=false;refresh.disabled=false;}
     }
     document.getElementById("refresh-referrals").addEventListener("click",loadReferrals);
+    document.addEventListener("visibilitychange",()=>{
+      if(document.visibilityState==="visible"&&!document.getElementById("partner-view").hidden&&getToken()&&Date.now()-lastReferralRefresh>45000)void loadReferrals();
+    });
     document.getElementById("pix-form").addEventListener("submit",async e=>{
       e.preventDefault();const btn=document.getElementById("pix-save");if(btn.disabled)return;btn.disabled=true;message("");
       try{const data=await request("update_profile",{...profileData("profile"),password:document.getElementById("profile-password").value},getToken());e.target.reset();showPartner(data.partner);notify("Dados e aceite salvos.");}
@@ -525,6 +530,7 @@
       const node=Array.from(document.querySelectorAll("#links-list .ref-link")).find((_,i)=>products[i].slug===preferred);
       if(node){node.scrollIntoView({behavior:"smooth",block:"center"})}
     }));
+    if(new URLSearchParams(location.search).get("entrar")==="1")showAuth(true);
     const savedToken=getToken();
     if(savedToken)request("me",{},savedToken).then(data=>{if(data.partner)showPartner(data.partner)}).catch(()=>{setToken("");showAuth(true)});
     if(productSlug){
