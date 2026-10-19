@@ -257,9 +257,9 @@
           <div class="partner-bar"><div><span class="auth-overline">Meu painel de indicações</span><h3 id="partner-name">Bem-vindo!</h3><p class="micro" id="partner-email"></p></div><button type="button" class="smallbtn" id="logout-button">Sair</button></div>
           <div class="partner-guide" role="note"><strong>Como saber se alguém se cadastrou pelo seu link?</strong><p>Quando o dono de uma barbearia concluir o cadastro com seu link, o nome da barbearia aparecerá aqui em <b>Minhas indicações</b>. Você verá cada etapa até o Pix, sem precisar perguntar ao suporte.</p></div>
           <div class="partner-summary" aria-label="Resumo das suas indicações">
-            <div class="summary-tile"><span>Barbearias cadastradas</span><strong id="partner-count">—</strong><small>Cadastros feitos pelo seu link</small></div>
-            <div class="summary-tile"><span>Comissão aprovada para Pix</span><strong id="partner-approved">—</strong><small>Aguardando transferência</small></div>
-            <div class="summary-tile"><span>Já recebi por Pix</span><strong id="partner-paid">—</strong><small>Pagamentos registrados</small></div>
+            <div class="summary-tile"><span>Barbearias cadastradas</span><strong id="partner-count">—</strong><small>Até 200 cadastros recentes</small></div>
+            <div class="summary-tile"><span>Comissão aprovada para Pix</span><strong id="partner-approved">—</strong><small>Das indicações recentes</small></div>
+            <div class="summary-tile"><span>Pix registrado como pago</span><strong id="partner-paid">—</strong><small>Confira sua conta bancária</small></div>
           </div>
           <section class="share-section" aria-label="Compartilhar seu link">
             <span class="auth-overline">Seu link exclusivo</span>
@@ -382,6 +382,7 @@
       renderLinks(p.code);message("");
       document.getElementById("links-list").hidden=!!p.needs_terms;
       document.getElementById("profile-warning").hidden=!p.needs_terms;
+      document.getElementById("copy-code").disabled=!!p.needs_terms;
       document.getElementById("profile-pix-type").value=p.pix_type||"";
       document.getElementById("profile-pix-key").value=p.pix_key||"";
       document.getElementById("profile-pix-holder").value=p.pix_holder||p.name||"";
@@ -404,9 +405,11 @@
       switch(row.status){
         case "pending":return ["O que falta agora?","A barbearia precisa pagar a primeira mensalidade. O teste grátis ou o cadastro não gera comissão."];
         case "review":
-          return ["O que falta agora?",row.eligible_at&&Date.parse(row.eligible_at)>Date.now()
-            ?"A primeira mensalidade foi registrada. Aguardamos 7 dias sem estorno para a equipe poder aprovar."
-            :"O prazo de 7 dias terminou. Agora a equipe precisa aprovar a comissão."];
+          return ["O que falta agora?",!row.eligible_at
+            ?"A mensalidade está em conferência. A equipe ainda precisa confirmar o prazo de validação."
+            :Date.parse(row.eligible_at)>Date.now()
+             ?"A primeira mensalidade foi registrada. Aguardamos 7 dias sem estorno para a equipe poder aprovar."
+             :"O prazo de 7 dias terminou. Agora a equipe precisa aprovar a comissão."];
         case "approved":return ["O que falta agora?","A comissão foi aprovada! O Agende Barber fará a transferência Pix manualmente."];
         case "paid":return ["Pix registrado","O Agende Barber marcou o Pix de R$ 15 como pago. Confira o recebimento no seu banco."];
         case "rejected":return ["Esta indicação não gera comissão",row.reason||"A equipe informou que esta indicação não atende ao regulamento."];
