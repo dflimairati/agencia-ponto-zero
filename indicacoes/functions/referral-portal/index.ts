@@ -137,8 +137,18 @@ Deno.serve(async(req:Request)=>{
         const {data,error}=await connection.from("referral_partners").update({...patch,updated_at:new Date().toISOString()}).eq("id",auth.partner.id).select(PARTNER_FIELDS).single();if(error)throw error;
         return answer(origin,200,{partner:partnerView(data)});
       }
+      // Lifetime counts are scoped to the signed-in partner. Activity feed is 200 most recent.
+      const [allCounts,approvedCounts,paidCounts]=await Promise.all([
+        connection.from("referral_conversions").select("id",{count:"exact",head:true}).eq("partner_id",auth.partner.id),
+        connection.from("referral_conversions").select("id",{count:"exact",head:true}).eq("partner_id",auth.partner.id).eq("status","approved"),
+        connection.from("referral_conversions").select("id",{count:"exact",head:true}).eq("partner_id",auth.partner.id).eq("status","paid")
+      ]);
+      if(allCounts.error||approvedCounts.error||paidCounts.error)throw allCounts.error||approvedCounts.error||paidCounts.error;
       const {data,error}=await connection.from("referral_conversions").select("id,shop_name,status,commission_cents,created_at,eligible_at,payout_due_at,paid_at,reason").eq("partner_id",auth.partner.id).order("created_at",{ascending:false}).limit(200);if(error)throw error;
-      return answer(origin,200,{conversions:data,limit:200});
+      return answer(origin,200,{
+        conversions:data,limit:200,
+        summary:{total:allCounts.count||0,approved_cents:(approvedCounts.count||0)*1500,paid_cents:(paidCounts.count||0)*1500}
+      });
     }
     if(action==="me"){
       const auth=await getPartner(req);
