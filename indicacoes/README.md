@@ -28,6 +28,6 @@ Exclusivo do Agende Barber. Portal estático em `indicacoes.agendebarber.com`, f
 - Entra em `https://indicacoes.agendebarber.com/?entrar=1#meucodigo` com o e-mail e a senha do programa de indicações (conta distinta do login de barbearia).
 - Compartilha o **link completo** pelo WhatsApp. Cada barbearia concluída com aquele código aparece em **Minhas indicações**; clique/visita não prova cadastro.
 - O indicador acompanha as etapas **Cadastrou → Pagou a mensalidade → Comissão aprovada → Pix registrado**. Indicações rejeitadas ou contestadas exibem orientação e o motivo disponível.
-- Resumo financeiro separa comissões **aprovadas mas ainda não pagas** dos Pix **registrados como pagos**. A lista atual é limitada aos 200 cadastros mais recentes; não declarar o total histórico com base nessa amostra.
+- Resumo financeiro calcula os **totais históricos** do indicador no servidor por estado (aprovadas mas ainda não pagas e Pix registrados como pagos); a lista detalhada mostra apenas os **200 cadastros mais recentes**. Caso a API antiga não retorne resumo, a interface usa a amostra recente como contingência.
 - O painel se atualiza com o botão **Atualizar** e quando o usuário retorna à aba após algum tempo. Não envia WhatsApp automaticamente nem inventa horários/comprovantes.
 - Para trocar o Pix, é necessário reconfirmar senha e aceite; se houver termos pendentes, a divulgação fica bloqueada.
