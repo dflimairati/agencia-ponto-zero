@@ -391,21 +391,82 @@
     function profileData(prefix){
       return {pix_type:document.getElementById(prefix+"-pix-type").value,pix_key:document.getElementById(prefix+"-pix-key").value,pix_holder:document.getElementById(prefix+"-pix-holder").value,pix_owner:document.getElementById(prefix+"-pix-owner").checked,adult:document.getElementById(prefix+"-adult").checked,consent:document.getElementById(prefix+"-consent").checked,terms_version:TERMS_VERSION};
     }
-    const statusLabels={pending:"Aguardando primeira mensalidade",review:"Em conferência / prazo de 7 dias",approved:"Aprovada para Pix",paid:"Pix pago",rejected:"Não elegível",reversed:"Pagamento em contestação / estorno registrado"};
+    const statusLabels={
+      pending:"Barbearia cadastrada",
+      review:"Mensalidade confirmada",
+      approved:"R$ 15 aprovados",
+      paid:"Pix pago",
+      rejected:"Indicação não elegível",
+      reversed:"Pagamento contestado"
+    };
+    const stages=["Cadastrou","Pagou mensalidade","Foi aprovada","Pix recebido"];
+    function nextInstruction(row){
+      switch(row.status){
+        case "pending":return ["O que falta agora?","A barbearia precisa pagar a primeira mensalidade. O teste grátis ou o cadastro não gera comissão."];
+        case "review":
+          return ["O que falta agora?",row.eligible_at&&Date.parse(row.eligible_at)>Date.now()
+            ?"A primeira mensalidade foi registrada. Aguardamos 7 dias sem estorno para a equipe poder aprovar."
+            :"O prazo de 7 dias terminou. Agora a equipe precisa aprovar a comissão."];
+        case "approved":return ["O que falta agora?","A comissão foi aprovada! O Agende Barber fará a transferência Pix manualmente."];
+        case "paid":return ["Pix registrado","O Agende Barber marcou o Pix de R$ 15 como pago. Confira o recebimento no seu banco."];
+        case "rejected":return ["Esta indicação não gera comissão",row.reason||"A equipe informou que esta indicação não atende ao regulamento."];
+        case "reversed":return ["Pagamento contestado",row.reason||"Houve estorno ou contestação. Se precisar, entre em contato com o suporte."];
+        default:return ["Em acompanhamento","Toque em Atualizar para verificar o andamento."];
+      }
+    }
+    function referralCard(row){
+      const card=element("article","referral-item");
+      const top=element("div","referral-top");
+      top.append(element("h4","referral-title",row.shop_name||"Barbearia cadastrada"));
+      top.append(element("span","referral-status "+(["pending","review"].includes(row.status)?"wait":(["rejected","reversed"].includes(row.status)?"risk":"")),statusLabels[row.status]||"Em acompanhamento"));
+      card.append(top);
+      card.append(element("div","referral-meta","Cadastro feito em "+formatDate(row.created_at)));
+      if(!["rejected","reversed"].includes(row.status)){
+        const level={pending:1,review:2,approved:3,paid:4}[row.status]||1;
+        const list=element("ol","referral-stages");
+        stages.forEach((name,index)=>{
+          const cls=index+1<level?"done":index+1===level?"active":"";
+          list.append(element("li",cls,name));
+        });
+        card.append(list);
+      }
+      const box=element("div","referral-next");
+      const info=nextInstruction(row);
+      box.append(element("b","",info[0]),element("span","",info[1]));
+      if(row.status==="approved"&&row.payout_due_at)box.append(element("p","referral-meta","Prazo do Pix: "+formatDate(row.payout_due_at)));
+      if(row.status==="review"&&row.eligible_at&&Date.parse(row.eligible_at)>Date.now())box.append(element("p","referral-meta","Fim da espera de 7 dias: "+formatDate(row.eligible_at)));
+      if(row.status==="paid"&&row.paid_at)box.append(element("p","referral-meta","Pagamento registrado em "+formatDate(row.paid_at)));
+      card.append(box);
+      return card;
+    }
+    let loadingReferrals=false;
     async function loadReferrals(){
-      const list=document.getElementById("my-referrals");list.textContent="Carregando…";
+      if(loadingReferrals)return;
+      loadingReferrals=true;
+      const list=document.getElementById("my-referrals");
+      const refresh=document.getElementById("refresh-referrals");
+      refresh.disabled=true;
+      list.textContent="Atualizando suas indicações…";
       try{
-        const data=await request("dashboard",{},getToken());list.textContent="";
-        if(!data.conversions.length){list.textContent="Nenhuma barbearia indicada ainda. Compartilhe seu link pessoal.";return;}
-        for(const row of data.conversions){
-          const card=document.createElement("div");card.className="referral-item";
-          const title=document.createElement("strong");title.textContent=row.shop_name;
-          const detail=document.createElement("p");detail.textContent=(statusLabels[row.status]||row.status)+" · R$ 15,00";
-          card.append(title,detail);
-          if(row.payout_due_at){const d=document.createElement("p");d.textContent="Prazo Pix: "+new Date(row.payout_due_at+"T12:00:00").toLocaleDateString("pt-BR");card.append(d);}
-          if(row.reason){const d=document.createElement("p");d.textContent=row.reason;card.append(d);}list.append(card);
+        const data=await request("dashboard",{},getToken());
+        const rows=Array.isArray(data.conversions)?data.conversions:[];
+        const paid=rows.filter(row=>row.status==="paid");
+        const approved=rows.filter(row=>row.status==="approved");
+        document.getElementById("partner-count").textContent=String(rows.length);
+        document.getElementById("partner-approved").textContent=brl(approved.reduce((sum,r)=>sum+(r.commission_cents||1500),0));
+        document.getElementById("partner-paid").textContent=brl(paid.reduce((sum,r)=>sum+(r.commission_cents||1500),0));
+        list.textContent="";
+        if(!rows.length){
+          const empty=element("div","referral-empty");
+          empty.append(element("b","","Nenhuma barbearia cadastrada pelo seu link ainda"),element("p","","Compartilhe seu link acima. Quando alguém concluir o cadastro de barbearia com seu código, o nome aparecerá aqui. Cliques e visitas não contam como cadastro."));
+          list.append(empty);
+          return;
         }
-      }catch(e){list.textContent="Não foi possível carregar as indicações. Use Atualizar para tentar novamente.";}
+        rows.forEach(row=>list.append(referralCard(row)));
+        if(rows.length===200)list.append(element("p","micro","Exibindo os 200 cadastros mais recentes. Para indicações mais antigas, fale com o suporte."));
+      }catch(e){
+        list.textContent="Não foi possível atualizar agora. Suas indicações não foram apagadas. Confira a conexão e toque em Atualizar.";
+      }finally{loadingReferrals=false;refresh.disabled=false;}
     }
     document.getElementById("refresh-referrals").addEventListener("click",loadReferrals);
     document.getElementById("pix-form").addEventListener("submit",async e=>{
@@ -458,7 +519,7 @@
       const token=getToken();setToken("");showAuth(true);
       if(token)request("logout",{},token).catch(()=>{});
     });
-    document.getElementById("copy-code").addEventListener("click",()=>copy(document.getElementById("partner-code").textContent,"Código copiado!"));
+    document.getElementById("copy-code").addEventListener("click",()=>copy(document.getElementById("partner-code").textContent,"Código copiado! Prefira compartilhar o link completo."));
     document.querySelectorAll("[data-prefill]").forEach(el=>el.addEventListener("click",()=>{
       const preferred=el.dataset.prefill;
       const node=Array.from(document.querySelectorAll("#links-list .ref-link")).find((_,i)=>products[i].slug===preferred);
