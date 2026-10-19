@@ -336,19 +336,42 @@
       }finally{clearTimeout(timeout)}
     }
     function codeLink(code,slug){return location.origin+"/p/"+encodeURIComponent(slug)+"/"+encodeURIComponent(code)}
+    const brl=value=>(value/100).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+    const formatDate=value=>value?new Date(value.length===10?value+"T12:00:00":value).toLocaleDateString("pt-BR"):"";
+    function element(tag,cls,value){
+      const node=document.createElement(tag);
+      if(cls)node.className=cls;
+      if(value!==undefined)node.textContent=value;
+      return node;
+    }
     function renderLinks(code){
-      const list=document.getElementById("links-list");list.textContent="";
+      const list=document.getElementById("links-list");
+      list.textContent="";
       products.forEach(p=>{
-        const link=codeLink(code,p.slug),item=document.createElement("div"),inp=document.createElement("input"),btn=document.createElement("button");
-        item.className="ref-link";
-        inp.readOnly=true;inp.value=link;inp.setAttribute("aria-label","Link de "+p.name);
-        btn.className="smallbtn";btn.type="button";btn.textContent="Copiar";
-        btn.addEventListener("click",()=>copy(link,"Link copiado!"));
-        item.append(inp,btn);list.append(item);
+        const link=codeLink(code,p.slug);
+        const wrap=element("div","ref-link");
+        const field=element("input");
+        field.readOnly=true;
+        field.value=link;
+        field.setAttribute("aria-label","Link pessoal para cadastrar uma barbearia");
+        const buttons=element("div","share-buttons");
+        const copyButton=element("button","","Copiar meu link");
+        copyButton.type="button";
+        copyButton.addEventListener("click",()=>copy(link,"Link de indicação copiado!"));
+        const whatsApp=element("button","share-whatsapp","Enviar pelo WhatsApp");
+        whatsApp.type="button";
+        whatsApp.addEventListener("click",()=>{
+          const msg="Olá! Conheça o Agende Barber para sua barbearia. Você pode testar gratuitamente pelo meu link: "+link;
+          window.open("https://wa.me/?text="+encodeURIComponent(msg),"_blank","noopener,noreferrer");
+        });
+        buttons.append(copyButton,whatsApp);
+        wrap.append(field,buttons);
+        list.append(wrap);
       });
     }
-    async function copy(text,ok){
-      try{await navigator.clipboard.writeText(text);notify(ok)}catch{notify("Não foi possível copiar automaticamente.")}
+    async function copy(value,ok){
+      try{await navigator.clipboard.writeText(value);notify(ok)}
+      catch{notify("Copie o texto pelo campo acima ou compartilhe pelo WhatsApp.")}
     }
     function showPartner(p){
       document.getElementById("auth-view").hidden=true;
@@ -363,7 +386,7 @@
       document.getElementById("profile-pix-key").value=p.pix_key||"";
       document.getElementById("profile-pix-holder").value=p.pix_holder||p.name||"";
       document.getElementById("acceptance-info").textContent=p.terms_version?"Aceite registrado: "+p.terms_version+" · "+new Date(p.consent_at).toLocaleString("pt-BR"):"Você ainda precisa aceitar o regulamento atual.";
-      loadReferrals();
+      void loadReferrals();
     }
     function profileData(prefix){
       return {pix_type:document.getElementById(prefix+"-pix-type").value,pix_key:document.getElementById(prefix+"-pix-key").value,pix_holder:document.getElementById(prefix+"-pix-holder").value,pix_owner:document.getElementById(prefix+"-pix-owner").checked,adult:document.getElementById(prefix+"-adult").checked,consent:document.getElementById(prefix+"-consent").checked,terms_version:TERMS_VERSION};
