@@ -96,3 +96,5 @@ body.ab-portal-open{overflow:hidden}
  .ab-portal{padding:8px!important;max-height:96vh}.ab-portal .auth-surface{padding:18px 12px!important}
 }
 @media(prefers-reduced-motion:reduce){.ab-button{transition:none}}
+
+.site-footer{display:none}
