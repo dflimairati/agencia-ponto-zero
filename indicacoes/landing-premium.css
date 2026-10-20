@@ -1,0 +1,98 @@
+
+/* Agende Barber — landing azul e branco. Mantém o portal original de indicações. */
+:root{--blue:#075af0;--blue2:#004fd7;--dark:#0c111b;--gray:#525c6c}
+body{background:#f2f6fd;color:#101722}#main{overflow:clip}
+.ab-page{background:linear-gradient(120deg,#fff 10%,#fafcff 50%,#eaf2fa 100%);color:var(--dark);font-family:"DM Sans",sans-serif}
+.ab-container{width:min(1180px,calc(100% - 80px));margin:auto}
+.ab-scene{position:relative;min-height:810px;isolation:isolate}
+.ab-scene:after{content:"";position:absolute;z-index:-1;inset:auto -10% 0;height:160px;background:linear-gradient(0deg,#f7faff,transparent);pointer-events:none}
+.ab-logo-head{position:relative;z-index:9;display:inline-block;padding-top:38px}
+.ab-logo-head img{width:182px;height:157px;object-fit:contain;object-position:left;filter:brightness(0)}
+.ab-copy{position:relative;z-index:7;width:58%;padding-top:15px}
+.ab-kicker{text-transform:uppercase;letter-spacing:5px;font-size:11px;font-weight:700;color:#454e5b;margin-bottom:27px}
+.ab-copy h1{font-family:Manrope,"DM Sans",sans-serif;font-size:clamp(58px,6.9vw,92px);line-height:1.05;letter-spacing:-5.7px;font-weight:800;color:#070a0f;margin:0 0 32px}
+.ab-copy h1 span{display:block;white-space:nowrap;color:var(--blue);font-size:clamp(50px,6vw,83px);letter-spacing:-5.6px}
+.ab-desc{font-size:20px;line-height:1.48;max-width:485px;font-weight:500;color:#4e5868;letter-spacing:-.2px;margin-bottom:28px}
+.ab-desc strong{color:#1e222b;font-weight:800}
+.ab-btnrow{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.ab-button{display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:13px;font-weight:800;font-size:15px;min-height:62px;padding:0 26px;white-space:nowrap;border:1px solid transparent;transition:transform .2s,background .2s}
+.ab-button:hover{transform:translateY(-2px)}.ab-button:focus-visible{outline:3px solid #133d7f;outline-offset:3px}
+.ab-primary{background:var(--blue);color:#fff;box-shadow:0 13px 28px #075af02e}.ab-primary:hover{background:var(--blue2);color:#fff}
+.ab-secondary{background:#ffffffeb;color:#172235;border-color:#adbacb}.ab-secondary:hover{border-color:#1d4d99;color:#172235}
+.ab-arrow{font-size:22px;font-weight:500;line-height:1}
+.ab-photo{position:absolute;z-index:1;right:-8%;top:-20px;width:62%;height:770px;object-fit:cover;object-position:50% 35%;-webkit-mask-image:linear-gradient(90deg,transparent 0%,black 36%),linear-gradient(0deg,transparent 0%,black 30%);mask-image:linear-gradient(90deg,transparent 0%,black 36%),linear-gradient(0deg,transparent 0%,black 30%);-webkit-mask-composite:source-in;mask-composite:intersect;filter:saturate(.88)}
+.ab-wash{position:absolute;z-index:2;right:-10%;top:0;width:72%;height:795px;background:linear-gradient(90deg,#fff 0%,#ffffff25 42%,transparent 75%),linear-gradient(0deg,#f6faff 0%,transparent 28%);pointer-events:none}
+.ab-phone{position:absolute;z-index:6;right:0;top:215px;width:306px;min-height:585px;padding:11px;border-radius:44px;background:#12151b;border:3px solid #687280;box-shadow:18px 30px 55px #0f17284a,-2px -2px 5px #fefefe65 inset;transform:rotate(5deg)}
+.ab-phone-inner{background:#fff;border:1px solid #aebbc8;color:#131824;border-radius:32px;min-height:562px;padding:13px 16px 17px;overflow:hidden}
+.ab-phone-status{display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:800;height:20px}
+.ab-notch{width:76px;height:17px;border-radius:0 0 13px 13px;background:#141414;margin-top:-18px}
+.ab-phone-head{display:flex;align-items:center;justify-content:space-between;margin:8px 0 17px}
+.ab-phone-head img{width:67px;height:52px;object-fit:contain;filter:brightness(0)}
+.ab-phone-dot{width:29px;height:29px;background:#e1e9f5;border-radius:50%;display:grid;place-items:center;font-size:16px;color:#4a5f86}
+.ab-phone h2{font:800 15px/1.15 Manrope,sans-serif;color:#10151e;letter-spacing:-.4px;margin:0 0 7px}
+.ab-phone p{font-size:9px;color:#758091;line-height:1.4;margin-bottom:13px}
+.ab-fake-balance{background:#fafcff;border:1px solid #e6eaf1;border-radius:12px;padding:14px;box-shadow:0 5px 15px #101a3110;margin-bottom:16px}
+.ab-fake-balance span{display:block;color:#626c7c;font-size:10px}.ab-fake-balance strong{color:var(--blue);display:block;font-size:28px;letter-spacing:-1px;margin-top:5px}
+.ab-phone-label{font-weight:800;font-size:11px;margin:12px 0 7px}
+.ab-fake-link{border:1px solid #e0e7f1;border-radius:7px;min-width:0;padding:9px;color:#667386;font-size:9px;display:flex;justify-content:space-between;gap:8px}.ab-fake-link span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ab-fake-button{background:var(--blue);color:#fff;border:0;border-radius:9px;width:100%;font-size:10px;font-weight:800;padding:11px 5px;margin-top:8px}
+.ab-fake-stats{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:4px;margin:12px 0 16px;text-align:center}
+.ab-fake-stats div{border-right:1px solid #e1e6ef;padding:5px 0}.ab-fake-stats div:last-child{border:0}.ab-fake-stats b{display:block;font-size:14px}.ab-fake-stats small{display:block;color:#818b99;font-size:9px;margin-top:4px}
+.ab-phone-rowtitle{display:flex;justify-content:space-between;font-size:10px;font-weight:800;margin:3px 0 8px}.ab-phone-rowtitle span{color:var(--blue);font-size:9px}
+.ab-fake-contact{display:flex;align-items:center;gap:8px;border-bottom:1px solid #e9edf3;padding:9px 0}
+.ab-initials{display:grid;place-items:center;width:27px;height:27px;flex-shrink:0;border-radius:50%;background:#e6ecf4;color:#51627c;font-size:10px;font-weight:800}
+.ab-personinfo{flex:1;min-width:0}.ab-personinfo b{display:block;font-size:10px}.ab-personinfo small{display:block;font-size:8px;margin-top:3px;color:#8c96a5}
+.ab-fake-status{font-size:9px;line-height:1.5;font-weight:800;color:#0b9951}.ab-fake-status.waiting{color:#2269db}
+.ab-cards{position:relative;z-index:10;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:-14px}
+.ab-card{background:#ffffffed;border:1px solid #fff;border-radius:24px;box-shadow:0 16px 32px #1a395312;min-height:262px;padding:27px 22px 25px;text-align:center;position:relative;display:flex;flex-direction:column;align-items:center}
+.ab-card-number{position:absolute;top:29px;left:23px;background:#e3eaf4;border-radius:50%;height:28px;width:28px;display:grid;place-items:center;font-size:12px;font-weight:800}
+.ab-card-icon{display:grid;place-items:center;width:70px;height:70px;margin-bottom:21px;border-radius:19px;background:#e8f1ff;color:var(--blue);font-size:34px}
+.ab-card-icon svg{height:37px;width:37px;stroke:currentColor;stroke-width:2;fill:none;stroke-linejoin:round;stroke-linecap:round}
+.ab-card h2{color:#0d121e;font:800 20px/1.18 Manrope,sans-serif;letter-spacing:-.6px;margin:0 0 13px}
+.ab-card p{color:#626b7e;font-size:14px;line-height:1.5;max-width:250px;margin:0}
+.ab-points{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;padding:33px 0;gap:0}
+.ab-point{display:flex;align-items:center;gap:13px;padding:0 15px;border-right:1px solid #c8d5e4;font-size:14px;font-weight:700;line-height:1.33}.ab-point:first-child{padding-left:0}.ab-point:last-child{border:none}
+.ab-point-symbol{display:grid;place-items:center;width:55px;height:55px;background:#e6effe;color:#0f2755;border-radius:17px;flex-shrink:0;font-size:25px}
+.ab-ending{position:relative;min-height:325px;background:#0c111c url('/assets/barbershop-chair.jpg') right center/cover no-repeat;border-radius:35px 35px 0 0;color:#fff;overflow:hidden}
+.ab-ending:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#081019f5,#07121fd0 49%,#06101a4d)}
+.ab-ending-inner{position:relative;z-index:1;min-height:325px;display:flex;align-items:center;justify-content:space-between}
+.ab-ending-copy{max-width:460px}.ab-ending-kicker{font-size:11px;letter-spacing:4.4px;text-transform:uppercase;font-weight:700;line-height:1.9;color:#e7ecf1}
+.ab-ending-rule{width:39px;height:4px;background:var(--blue);margin:24px 0 18px}
+.ab-ending h2{color:#fff;line-height:1.15;font-weight:800;font-size:32px;letter-spacing:-1.5px;margin:0}
+.ab-ending-logo{width:160px;opacity:.9;filter:drop-shadow(0 7px 15px #0007)}
+.ab-ending-links{color:#b6c4d4;font-size:11px;margin-top:20px}.ab-ending-links a{text-decoration:underline;text-underline-offset:3px}
+.ab-overlay{position:fixed;inset:0;z-index:1200;background:#10192abf;backdrop-filter:blur(9px)}
+body.ab-portal-open{overflow:hidden}
+.ab-portal{position:fixed!important;z-index:1201;top:50%!important;left:50%!important;transform:translate(-50%,-50%);overflow-y:auto;overscroll-behavior:contain;max-height:92vh;width:min(680px,calc(100vw - 30px))!important;padding:12px!important;border-radius:24px;background:#fff;color:#182333;box-shadow:0 30px 80px #0b16306e}
+.ab-portal .signup-story{display:none}.ab-portal .signup-panel{display:block;background:#fff!important;border:0!important;box-shadow:none!important}.ab-portal .auth-surface{padding:25px!important;background:#fff}
+.ab-portal .auth-overline,.ab-portal .tab.active{color:var(--blue)}
+.ab-portal h3,.ab-portal h4{color:#16243c}
+.ab-portal .btn-bright,.ab-portal .smallbtn{background:var(--blue)!important;color:#fff!important;border:0!important}
+.ab-portal .partner-guide,.ab-portal .share-section,.ab-portal .code-card{background:#eaf2ff;border-color:#c9dafe}
+.ab-portal .partner-summary .summary-tile{background:#f8fbff;border-color:#cbdcf5}
+.ab-portal .summary-tile strong,.ab-portal .partner-guide strong{color:#1455b9}
+.ab-portal .referral-status{color:#165da5}
+.ab-close{position:sticky;z-index:9;top:0;float:right;height:36px;width:36px;display:grid;place-items:center;margin-bottom:-30px;border-radius:50%;background:#fff;color:#162238;border:1px solid #d2ddec;box-shadow:0 5px 12px #12213921;font-size:25px}
+@media(max-width:1000px){.ab-container{width:calc(100% - 48px)}.ab-copy{width:62%}.ab-copy h1{font-size:clamp(56px,6.7vw,76px)}.ab-copy h1 span{font-size:clamp(48px,6vw,72px)}.ab-photo{right:-8%;width:69%}.ab-phone{transform:rotate(5deg) scale(.9);transform-origin:top right;right:-1%}.ab-desc{max-width:450px;font-size:19px}}
+@media(max-width:800px){
+ .ab-logo-head{padding-top:14px}.ab-logo-head img{width:145px;height:130px}
+ .ab-scene{min-height:auto;padding-bottom:450px}.ab-copy{width:100%}
+ .ab-kicker{font-size:9px;letter-spacing:3px;margin-bottom:20px}.ab-copy h1{font-size:clamp(52px,10vw,76px);margin-bottom:24px;letter-spacing:-4px}
+ .ab-copy h1 span{font-size:clamp(45px,9.2vw,69px);letter-spacing:-3px}
+ .ab-desc{max-width:560px;font-size:17px}.ab-photo{top:auto;bottom:0;right:-4%;width:88%;height:435px;object-position:55% 30%;-webkit-mask-image:linear-gradient(90deg,transparent,black 30%);mask-image:linear-gradient(90deg,transparent,black 30%)}.ab-wash{top:auto;bottom:0;height:370px;width:100%;background:linear-gradient(0deg,#f7faff,transparent 30%)}
+ .ab-phone{top:auto;bottom:-8px;right:4%;transform:rotate(5deg) scale(.79);transform-origin:bottom right}
+ .ab-cards{margin-top:0}.ab-card{min-height:232px;padding:19px 11px}.ab-card h2{font-size:17px}.ab-card p{font-size:12px}.ab-card-number{top:15px;left:12px}
+ .ab-points{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 0}.ab-point:nth-child(2){border:none}
+}
+@media(max-width:560px){
+ .ab-container{width:calc(100% - 34px)}.ab-logo-head img{width:126px;height:110px}
+ .ab-kicker{font-size:8px;letter-spacing:1.7px}.ab-copy h1{font-size:clamp(42px,11vw,59px);letter-spacing:-3px;margin-bottom:19px}.ab-copy h1 span{font-size:clamp(38px,9.7vw,52px);letter-spacing:-2.5px}
+ .ab-desc{font-size:15px;line-height:1.55;max-width:355px}.ab-btnrow{display:grid;grid-template-columns:1.5fr 1fr;gap:10px}.ab-button{font-size:11px;min-height:49px;padding:0 10px;gap:4px}.ab-arrow{font-size:17px}
+ .ab-scene{padding-bottom:388px}.ab-photo{height:378px;width:100%;right:-3%;object-position:45% 25%}.ab-phone{right:0;bottom:-25px;transform:rotate(5deg) scale(.6)}
+ .ab-cards{grid-template-columns:1fr;gap:12px}.ab-card{min-height:120px;display:grid;grid-template-columns:60px 1fr;column-gap:14px;text-align:left;align-items:center;padding:16px 20px}.ab-card-number{position:static;grid-column:1;grid-row:1;height:24px;width:24px;justify-self:center}
+ .ab-card-icon{grid-row:2/4;grid-column:1;height:55px;width:55px;margin:0}.ab-card-icon svg{width:30px;height:30px}.ab-card h2{grid-column:2;grid-row:1/3;font-size:17px;margin:0}.ab-card p{grid-column:2;grid-row:3;font-size:12px}
+ .ab-points{padding:25px 0}.ab-point{padding:0 6px;gap:9px;font-size:11px}.ab-point-symbol{width:39px;height:39px;border-radius:11px;font-size:20px}
+ .ab-ending{min-height:286px;border-radius:22px 22px 0 0}.ab-ending-inner{min-height:286px}.ab-ending h2{font-size:25px}.ab-ending-copy{max-width:260px}.ab-ending-kicker{font-size:8px;letter-spacing:2.5px}.ab-ending-logo{width:92px;align-self:flex-end;margin-bottom:45px}.ab-ending-links{font-size:9px}
+ .ab-portal{padding:8px!important;max-height:96vh}.ab-portal .auth-surface{padding:18px 12px!important}
+}
+@media(prefers-reduced-motion:reduce){.ab-button{transition:none}}
