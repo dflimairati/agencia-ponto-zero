@@ -62,7 +62,7 @@ body{background:#f2f6fd;color:#101722}#main{overflow:clip}
 .ab-point-label{display:block;min-width:0;overflow-wrap:break-word;color:#1a2940;font:750 13px/1.4 "DM Sans",system-ui,sans-serif;letter-spacing:-.1px}
 /* Closing panel: grid reserves independent space for copy and original logo. */
 .ab-ending{position:relative;overflow:hidden;isolation:isolate;min-height:318px;border-radius:30px 30px 0 0;color:#fff;background:#0c111c url('/assets/barbershop-chair.jpg') right center/cover no-repeat}
-.ab-ending:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#081019f5 0%,#07121fd8 52%,#06101a5c 100%)}
+.ab-ending:before{content:"";position:absolute;z-index:0;inset:0;background:linear-gradient(90deg,#081019f5 0%,#07121fd8 52%,#06101a5c 100%)}
 .ab-ending-inner{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(115px,175px);align-items:center;gap:clamp(24px,5vw,90px);min-height:318px;padding:40px 0}
 .ab-ending-copy{min-width:0;max-width:550px}
 .ab-ending-kicker{display:block;font-size:10px;letter-spacing:clamp(2px,.35vw,4.4px);text-transform:uppercase;font-weight:700;line-height:1.9;color:#e7ecf1}
