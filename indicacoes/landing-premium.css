@@ -6,8 +6,8 @@ body{background:#f2f6fd;color:#101722}#main{overflow:clip}
 .ab-container{width:min(1180px,calc(100% - 80px));margin:auto}
 .ab-scene{position:relative;min-height:810px;isolation:isolate}
 .ab-scene:after{content:"";position:absolute;z-index:-1;inset:auto -10% 0;height:160px;background:linear-gradient(0deg,#f7faff,transparent);pointer-events:none}
-.ab-logo-head{position:relative;z-index:9;display:inline-block;padding-top:38px}
-.ab-logo-head img{width:182px;height:157px;object-fit:contain;object-position:left;filter:brightness(0)}
+
+
 .ab-copy{position:relative;z-index:7;width:58%;padding-top:15px}
 .ab-kicker{text-transform:uppercase;letter-spacing:5px;font-size:11px;font-weight:700;color:#454e5b;margin-bottom:27px}
 .ab-copy h1{font-family:Manrope,"DM Sans",sans-serif;font-size:clamp(58px,6.9vw,92px);line-height:1.05;letter-spacing:-5.7px;font-weight:800;color:#070a0f;margin:0 0 32px}
@@ -50,17 +50,27 @@ body{background:#f2f6fd;color:#101722}#main{overflow:clip}
 .ab-card-icon svg{height:37px;width:37px;stroke:currentColor;stroke-width:2;fill:none;stroke-linejoin:round;stroke-linecap:round}
 .ab-card h2{color:#0d121e;font:800 20px/1.18 Manrope,sans-serif;letter-spacing:-.6px;margin:0 0 13px}
 .ab-card p{color:#626b7e;font-size:14px;line-height:1.5;max-width:250px;margin:0}
-.ab-points{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;padding:33px 0;gap:0}
-.ab-point{display:flex;align-items:center;gap:13px;padding:0 15px;border-right:1px solid #c8d5e4;font-size:14px;font-weight:700;line-height:1.33}.ab-point:first-child{padding-left:0}.ab-point:last-child{border:none}
-.ab-point-symbol{display:grid;place-items:center;width:55px;height:55px;background:#e6effe;color:#0f2755;border-radius:17px;flex-shrink:0;font-size:25px}
-.ab-ending{position:relative;min-height:325px;background:#0c111c url('/assets/barbershop-chair.jpg') right center/cover no-repeat;border-radius:35px 35px 0 0;color:#fff;overflow:hidden}
-.ab-ending:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#081019f5,#07121fd0 49%,#06101a4d)}
-.ab-ending-inner{position:relative;z-index:1;min-height:325px;display:flex;align-items:center;justify-content:space-between}
-.ab-ending-copy{max-width:460px}.ab-ending-kicker{font-size:11px;letter-spacing:4.4px;text-transform:uppercase;font-weight:700;line-height:1.9;color:#e7ecf1}
-.ab-ending-rule{width:39px;height:4px;background:var(--blue);margin:24px 0 18px}
-.ab-ending h2{color:#fff;line-height:1.15;font-weight:800;font-size:32px;letter-spacing:-1.5px;margin:0}
-.ab-ending-logo{width:160px;opacity:.9;filter:drop-shadow(0 7px 15px #0007)}
-.ab-ending-links{color:#b6c4d4;font-size:11px;margin-top:20px}.ab-ending-links a{text-decoration:underline;text-underline-offset:3px}
+
+/* Identity: preserve original 1:1 logo proportions at all screen widths. */
+.ab-logo-head{position:relative;z-index:9;display:inline-flex;align-items:center;justify-content:flex-start;width:clamp(116px,13vw,166px);max-width:100%;padding-top:26px}
+.ab-logo-head img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain;object-position:center;filter:brightness(0)}
+/* The benefits are genuine responsive components, not unicode glyphs. */
+.ab-points{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;align-items:stretch;padding:32px 0 36px}
+.ab-point{display:flex;align-items:center;gap:12px;min-width:0;min-height:89px;padding:15px 14px;border:1px solid #dce6f4;border-radius:17px;background:linear-gradient(150deg,#fff,#f9fbff);box-shadow:0 10px 24px #1e3f700a}
+.ab-point-symbol{display:grid;place-items:center;flex:0 0 47px;width:47px;height:47px;border-radius:14px;background:#e9f1ff;color:#125ee7}
+.ab-point-symbol svg{display:block;width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ab-point-label{display:block;min-width:0;overflow-wrap:break-word;color:#1a2940;font:750 13px/1.4 "DM Sans",system-ui,sans-serif;letter-spacing:-.1px}
+/* Closing panel: grid reserves independent space for copy and original logo. */
+.ab-ending{position:relative;overflow:hidden;isolation:isolate;min-height:318px;border-radius:30px 30px 0 0;color:#fff;background:#0c111c url('/assets/barbershop-chair.jpg') right center/cover no-repeat}
+.ab-ending:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#081019f5 0%,#07121fd8 52%,#06101a5c 100%)}
+.ab-ending-inner{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(115px,175px);align-items:center;gap:clamp(24px,5vw,90px);min-height:318px;padding:40px 0}
+.ab-ending-copy{min-width:0;max-width:550px}
+.ab-ending-kicker{display:block;font-size:10px;letter-spacing:clamp(2px,.35vw,4.4px);text-transform:uppercase;font-weight:700;line-height:1.9;color:#e7ecf1}
+.ab-ending-rule{width:39px;height:4px;background:var(--blue);margin:20px 0 17px}
+.ab-ending h2{max-width:560px;color:#fff;font-weight:800;font-size:clamp(25px,3vw,36px);line-height:1.18;letter-spacing:-1.1px;margin:0;overflow-wrap:break-word}
+.ab-ending-logo{display:block;justify-self:end;align-self:center;width:clamp(110px,13vw,160px);max-width:100%;height:auto;aspect-ratio:1;object-fit:contain;object-position:center;opacity:.96;filter:drop-shadow(0 7px 15px #0007)}
+.ab-ending-links{color:#c6d2e0;font-size:12px;line-height:1.6;margin:19px 0 0;overflow-wrap:anywhere}
+.ab-ending-links a{text-decoration:underline;text-underline-offset:3px}
 .ab-overlay{position:fixed;inset:0;z-index:1200;background:#10192abf;backdrop-filter:blur(9px)}
 body.ab-portal-open{overflow:hidden}
 .ab-portal{position:fixed!important;z-index:1201;top:50%!important;left:50%!important;transform:translate(-50%,-50%);overflow-y:auto;overscroll-behavior:contain;max-height:92vh;width:min(680px,calc(100vw - 30px))!important;padding:12px!important;border-radius:24px;background:#fff;color:#182333;box-shadow:0 30px 80px #0b16306e}
@@ -75,25 +85,64 @@ body.ab-portal-open{overflow:hidden}
 .ab-close{position:sticky;z-index:9;top:0;float:right;height:36px;width:36px;display:grid;place-items:center;margin-bottom:-30px;border-radius:50%;background:#fff;color:#162238;border:1px solid #d2ddec;box-shadow:0 5px 12px #12213921;font-size:25px}
 @media(max-width:1000px){.ab-container{width:calc(100% - 48px)}.ab-copy{width:62%}.ab-copy h1{font-size:clamp(56px,6.7vw,76px)}.ab-copy h1 span{font-size:clamp(48px,6vw,72px)}.ab-photo{right:-8%;width:69%}.ab-phone{transform:rotate(5deg) scale(.9);transform-origin:top right;right:-1%}.ab-desc{max-width:450px;font-size:19px}}
 @media(max-width:800px){
- .ab-logo-head{padding-top:14px}.ab-logo-head img{width:145px;height:130px}
+ 
  .ab-scene{min-height:auto;padding-bottom:450px}.ab-copy{width:100%}
  .ab-kicker{font-size:9px;letter-spacing:3px;margin-bottom:20px}.ab-copy h1{font-size:clamp(52px,10vw,76px);margin-bottom:24px;letter-spacing:-4px}
  .ab-copy h1 span{font-size:clamp(45px,9.2vw,69px);letter-spacing:-3px}
  .ab-desc{max-width:560px;font-size:17px}.ab-photo{top:auto;bottom:0;right:-4%;width:88%;height:435px;object-position:55% 30%;-webkit-mask-image:linear-gradient(90deg,transparent,black 30%);mask-image:linear-gradient(90deg,transparent,black 30%)}.ab-wash{top:auto;bottom:0;height:370px;width:100%;background:linear-gradient(0deg,#f7faff,transparent 30%)}
  .ab-phone{top:auto;bottom:-8px;right:4%;transform:rotate(5deg) scale(.79);transform-origin:bottom right}
  .ab-cards{margin-top:0}.ab-card{min-height:232px;padding:19px 11px}.ab-card h2{font-size:17px}.ab-card p{font-size:12px}.ab-card-number{top:15px;left:12px}
- .ab-points{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 0}.ab-point:nth-child(2){border:none}
+
 }
 @media(max-width:560px){
- .ab-container{width:calc(100% - 34px)}.ab-logo-head img{width:126px;height:110px}
+ .ab-container{width:calc(100% - 34px)}
  .ab-kicker{font-size:8px;letter-spacing:1.7px}.ab-copy h1{font-size:clamp(42px,11vw,59px);letter-spacing:-3px;margin-bottom:19px}.ab-copy h1 span{font-size:clamp(38px,9.7vw,52px);letter-spacing:-2.5px}
  .ab-desc{font-size:15px;line-height:1.55;max-width:355px}.ab-btnrow{display:grid;grid-template-columns:1.5fr 1fr;gap:10px}.ab-button{font-size:11px;min-height:49px;padding:0 10px;gap:4px}.ab-arrow{font-size:17px}
  .ab-scene{padding-bottom:388px}.ab-photo{height:378px;width:100%;right:-3%;object-position:45% 25%}.ab-phone{right:0;bottom:-25px;transform:rotate(5deg) scale(.6)}
  .ab-cards{grid-template-columns:1fr;gap:12px}.ab-card{min-height:120px;display:grid;grid-template-columns:60px 1fr;column-gap:14px;text-align:left;align-items:center;padding:16px 20px}.ab-card-number{position:static;grid-column:1;grid-row:1;height:24px;width:24px;justify-self:center}
  .ab-card-icon{grid-row:2/4;grid-column:1;height:55px;width:55px;margin:0}.ab-card-icon svg{width:30px;height:30px}.ab-card h2{grid-column:2;grid-row:1/3;font-size:17px;margin:0}.ab-card p{grid-column:2;grid-row:3;font-size:12px}
- .ab-points{padding:25px 0}.ab-point{padding:0 6px;gap:9px;font-size:11px}.ab-point-symbol{width:39px;height:39px;border-radius:11px;font-size:20px}
- .ab-ending{min-height:286px;border-radius:22px 22px 0 0}.ab-ending-inner{min-height:286px}.ab-ending h2{font-size:25px}.ab-ending-copy{max-width:260px}.ab-ending-kicker{font-size:8px;letter-spacing:2.5px}.ab-ending-logo{width:92px;align-self:flex-end;margin-bottom:45px}.ab-ending-links{font-size:9px}
+
+
  .ab-portal{padding:8px!important;max-height:96vh}.ab-portal .auth-surface{padding:18px 12px!important}
+}
+
+/* Layout checkpoints verified for desktop, tablet, 390px and 320px mobile. */
+@media(max-width:1000px){
+ .ab-points{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .ab-point{min-height:80px}
+ .ab-ending-inner{grid-template-columns:minmax(0,1fr) 135px}
+ .ab-ending-logo{width:135px}
+}
+@media(max-width:800px){
+ .ab-logo-head{width:138px;padding-top:14px}
+ .ab-ending-inner{padding:36px 0;min-height:300px}
+}
+@media(max-width:620px){
+ .ab-points{grid-template-columns:1fr;gap:10px;padding:24px 0 28px}
+ .ab-point{min-height:69px;padding:11px 14px;gap:13px;border-radius:15px}
+ .ab-point-symbol{width:43px;height:43px;flex-basis:43px;border-radius:12px}
+ .ab-point-symbol svg{height:23px;width:23px}
+ .ab-point-label{font-size:13px;line-height:1.4}
+ .ab-ending{min-height:auto;border-radius:22px 22px 0 0;background-position:65% center}
+ .ab-ending:before{background:linear-gradient(90deg,#081019f5,#07121fe1 65%,#06101a80)}
+ .ab-ending-inner{grid-template-columns:minmax(0,1fr);gap:18px;justify-items:start;align-content:center;min-height:auto;padding:34px 0 38px}
+ .ab-ending-copy{max-width:100%}
+ .ab-ending-kicker{font-size:9px;letter-spacing:2.3px}
+ .ab-ending h2{font-size:clamp(23px,6vw,29px);letter-spacing:-.7px}
+ .ab-ending-logo{width:112px;max-width:100%;justify-self:start;align-self:start}
+ .ab-ending-links{font-size:11px;margin-top:15px}
+}
+@media(max-width:560px){
+ .ab-logo-head{width:116px;padding-top:9px}
+ .ab-btnrow{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+ .ab-button{width:100%;min-width:0;min-height:48px;padding:11px 14px;white-space:normal;text-align:center;font-size:13px;line-height:1.4}
+ .ab-copy h1 span{font-size:clamp(32px,8.9vw,50px);letter-spacing:-2.3px}
+}
+@media(max-width:370px){
+ .ab-container{width:calc(100% - 28px)}
+ .ab-copy h1{font-size:clamp(38px,10vw,43px)}
+ .ab-copy h1 span{font-size:clamp(30px,8.9vw,35px);letter-spacing:-1.5px}
+ .ab-phone{right:-8px}
 }
 @media(prefers-reduced-motion:reduce){.ab-button{transition:none}}
 
