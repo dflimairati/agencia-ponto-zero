@@ -280,7 +280,12 @@
           <span class="auth-overline">Central de Indicações</span>
           <h3 class="auth-title" id="recovery-title">Redefinir senha</h3>
           <p class="auth-sub" id="recovery-description">Informe o e-mail usado no cadastro para receber um link seguro de redefinição.</p>
-          <form id="reset-request-form" class="auth-form">
+          <div id="reset-email-pending" class="recovery-offline" role="status">
+            <strong>Recuperação por e-mail em configuração</strong>
+            <p>Estamos finalizando a segurança do envio. Por enquanto, o suporte pode orientar a recuperação da sua conta de indicações.</p>
+            <a class="btn btn-bright" href="https://wa.me/5542998319122?text=Preciso%20recuperar%20minha%20senha%20da%20Central%20de%20Indicacoes" target="_blank" rel="noopener noreferrer">Conversar com o suporte ↗</a>
+          </div>
+          <form id="reset-request-form" class="auth-form" hidden>
             <label for="reset-email">E-mail cadastrado no programa</label>
             <input id="reset-email" type="email" required maxlength="254" autocomplete="email" placeholder="seu@email.com">
             <button id="reset-request-button" class="btn btn-bright" type="submit">Enviar link de recuperação ↗</button>
@@ -535,12 +540,15 @@
       document.getElementById("signup-form").hidden=login;
       document.getElementById("login-form").hidden=!login;message("");
     }
+    // Keep self-service recovery disabled until email DNS and the Supabase function are ready.
+    const recoveryEmailEnabled=false;
     let passwordResetToken="";
     function showRecovery(hasToken=false){
       document.getElementById("partner-view").hidden=true;
       document.getElementById("auth-view").hidden=true;
       document.getElementById("recovery-view").hidden=false;
-      document.getElementById("reset-request-form").hidden=hasToken;
+      document.getElementById("reset-request-form").hidden=hasToken||!recoveryEmailEnabled;
+      document.getElementById("reset-email-pending").hidden=hasToken||recoveryEmailEnabled;
       document.getElementById("reset-complete-form").hidden=!hasToken;
       document.getElementById("recovery-title").textContent=hasToken?"Criar nova senha":"Esqueceu sua senha?";
       document.getElementById("recovery-description").textContent=hasToken
