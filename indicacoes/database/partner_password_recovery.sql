@@ -23,7 +23,7 @@ ALTER TABLE public.referral_registration_attempts
  DROP CONSTRAINT IF EXISTS referral_registration_attempts_action_check;
 ALTER TABLE public.referral_registration_attempts
  ADD CONSTRAINT referral_registration_attempts_action_check
- CHECK (action IN ('register','login','reset_request','reset_email'));
+ CHECK (action IN ('register','login','reset_request','reset_email','reset_password'));
 
 CREATE OR REPLACE FUNCTION public.referral_consume_password_reset(
   p_token_hash text,
