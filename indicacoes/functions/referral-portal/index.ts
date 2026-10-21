@@ -102,7 +102,7 @@ Deno.serve(async(req:Request)=>{
     // The response never reveals whether a partner account exists.
     if(action==="request_password_reset"){
       const email=String(input.email||"").trim().toLowerCase();
-      if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)||email.length>254)
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254)
         return answer(origin,400,{error:"Informe um e-mail válido."});
       const apiKey=Deno.env.get("RESEND_API_KEY");
       const sender=Deno.env.get("REFERRAL_RESET_FROM");
