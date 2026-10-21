@@ -165,3 +165,9 @@ body.ab-portal-open{overflow:hidden}
  .recovery-footer{align-items:flex-start;flex-direction:column}
  #recovery-view .auth-title{font-size:23px}
 }
+
+/* Temporary, honest account-recovery fallback until verified email delivery is online. */
+.recovery-offline{display:grid;gap:14px;padding:17px;border:1px solid #bed4f5;background:#eef5ff;border-radius:15px;color:#1b355a}
+.recovery-offline strong{font-size:14px;line-height:1.4}
+.recovery-offline p{font-size:13px;line-height:1.65;margin:0;color:#425776}
+.recovery-offline .btn{display:inline-flex;align-items:center;justify-content:center;white-space:normal;text-align:center;font-size:13px;min-height:48px;width:100%;padding:11px}
