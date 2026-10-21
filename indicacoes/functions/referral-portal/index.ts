@@ -97,6 +97,101 @@ Deno.serve(async(req:Request)=>{
   if(!input||typeof input!=="object")return answer(origin,400,{error:"Dados inválidos."});
   const action=String(input.action||"");
   try{
+
+    // Public recovery is independent of Supabase Auth (partners use PBKDF2).
+    // The response never reveals whether a partner account exists.
+    if(action==="request_password_reset"){
+      const email=String(input.email||"").trim().toLowerCase();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254)
+        return answer(origin,400,{error:"Informe um e-mail válido."});
+      const apiKey=Deno.env.get("RESEND_API_KEY");
+      const sender=Deno.env.get("REFERRAL_RESET_FROM");
+      if(!apiKey||!sender)
+        return answer(origin,503,{error:"Recuperação por e-mail temporariamente indisponível. Entre em contato com o suporte."});
+      const generic={ok:true,message:"Se este e-mail estiver cadastrado, enviaremos um link válido por 20 minutos. Confira também o spam."};
+      const rawIP=req.headers.get("cf-connecting-ip")||req.headers.get("x-real-ip")||(req.headers.get("x-forwarded-for")||"").split(",")[0].trim()||"unknown";
+      const iphash=await sha256(rawIP.slice(0,120)+"|partner-reset-ip|"+apiKey.slice(0,16));
+      const cutoff=new Date(Date.now()-3600000).toISOString();
+      const {count,error:ipError}=await connection.from("referral_registration_attempts")
+        .select("id",{count:"exact",head:true}).eq("ip_hash",iphash).eq("action","reset_request").gte("created_at",cutoff);
+      if(ipError)throw ipError;
+      if((count||0)>=5)return answer(origin,429,{error:"Muitas tentativas. Tente novamente mais tarde."});
+      const {error:trackErr}=await connection.from("referral_registration_attempts")
+        .insert({ip_hash:iphash,action:"reset_request"});
+      if(trackErr)throw trackErr;
+      // Account-specific throttle stored as a keyed hash; no e-mail address in rate-limit logs.
+      const emailhash=await sha256(email+"|partner-reset-email|"+apiKey);
+      const {count:emails,error:emailError}=await connection.from("referral_registration_attempts")
+        .select("id",{count:"exact",head:true}).eq("ip_hash",emailhash).eq("action","reset_email").gte("created_at",cutoff);
+      if(emailError)throw emailError;
+      if((emails||0)>=3)return answer(origin,200,generic);
+      const {error:emailTrackErr}=await connection.from("referral_registration_attempts")
+        .insert({ip_hash:emailhash,action:"reset_email"});
+      if(emailTrackErr)throw emailTrackErr;
+      const {data:partner,error:partnerError}=await connection.from("referral_partners")
+        .select("id").eq("email",email).eq("partner_status","active").maybeSingle();
+      if(partnerError)throw partnerError;
+      if(partner){
+        const token=randHex(32),token_hash=await sha256(token);
+        const {error:insertError}=await connection.from("referral_password_resets").insert({
+          partner_id:partner.id,token_hash,expires_at:new Date(Date.now()+20*60000).toISOString()
+        });
+        if(insertError)throw insertError;
+        const resetUrl="https://indicacoes.agendebarber.com/#redefinir="+token;
+        let sent=false;
+        try{
+          const controller=new AbortController();
+          const timeout=setTimeout(()=>controller.abort(),12000);
+          try{
+            const response=await fetch("https://api.resend.com/emails",{
+              method:"POST",signal:controller.signal,
+              headers:{"Authorization":"Bearer "+apiKey,"Content-Type":"application/json"},
+              body:JSON.stringify({
+                from:sender,to:[email],subject:"Redefina sua senha | Agende Barber",
+                text:"Recebemos uma solicitação de redefinição de senha da Central de Indicações do Agende Barber. Use o link a seguir em até 20 minutos: "+resetUrl+"\\n\\nSe você não solicitou, ignore esta mensagem.",
+                html:'<div style="max-width:520px;margin:auto;font-family:Arial,sans-serif;color:#172034"><h2>Redefina sua senha</h2><p>Você solicitou uma nova senha para a Central de Indicações do Agende Barber.</p><p><a href="'+resetUrl+'" style="display:inline-block;background:#075af0;color:#fff;padding:14px 22px;border-radius:9px;text-decoration:none;font-weight:bold">Criar nova senha</a></p><p>Este link vence em 20 minutos e só pode ser utilizado uma vez.</p><p>Se não foi você, ignore este e-mail.</p></div>'
+              })
+            });
+            sent=response.ok;
+            if(!sent)console.error("Referral password reset email provider returned",response.status);
+          }finally{clearTimeout(timeout)}
+        }catch(err){console.error("Referral password reset delivery failed",err instanceof Error?err.name:"failure");}
+        if(!sent){
+          const {error:invalidateErr}=await connection.from("referral_password_resets")
+            .update({used_at:new Date().toISOString()}).eq("token_hash",token_hash);
+          if(invalidateErr)console.error("Could not revoke unsent referral password reset");
+        }
+      }
+      return answer(origin,200,generic);
+    }
+    if(action==="reset_password"){
+      const token=String(input.token||"").trim().toLowerCase();
+      const password=String(input.password||"");
+      if(!/^[a-f0-9]{64}$/.test(token))
+        return answer(origin,400,{error:"Link inválido. Solicite uma nova redefinição."});
+      if(password.length<10||password.length>128)
+        return answer(origin,400,{error:"A nova senha deve ter de 10 a 128 caracteres."});
+      const rawIP=req.headers.get("cf-connecting-ip")||req.headers.get("x-real-ip")||(req.headers.get("x-forwarded-for")||"").split(",")[0].trim()||"unknown";
+      const iphash=await sha256(rawIP.slice(0,120)+"|partner-reset-confirm");
+      const {count,error:limitError}=await connection.from("referral_registration_attempts")
+        .select("id",{count:"exact",head:true}).eq("ip_hash",iphash).eq("action","reset_password")
+        .gte("created_at",new Date(Date.now()-3600000).toISOString());
+      if(limitError)throw limitError;
+      if((count||0)>=15)return answer(origin,429,{error:"Muitas tentativas. Tente novamente mais tarde."});
+      const {error:rateError}=await connection.from("referral_registration_attempts")
+        .insert({ip_hash:iphash,action:"reset_password"});
+      if(rateError)throw rateError;
+      const salt=randHex(20);
+      const {data:ok,error:resetError}=await connection.rpc("referral_consume_password_reset",{
+        p_token_hash:await sha256(token),
+        p_password_salt:salt,
+        p_password_hash:await derive(password,salt,210000),
+        p_password_iterations:210000
+      });
+      if(resetError)throw resetError;
+      if(!ok)return answer(origin,400,{error:"Este link expirou ou já foi utilizado. Solicite uma nova redefinição."});
+      return answer(origin,200,{ok:true,message:"Senha atualizada. Entre novamente com sua nova senha."});
+    }
     if(action==="validate_code"){
       const code=String(input.code||"").trim().toUpperCase();
       const {data,error}=await connection.from("referral_partners").select("referral_code").eq("referral_code",code).eq("partner_status","active").eq("terms_version",TERMS_VERSION).maybeSingle();
