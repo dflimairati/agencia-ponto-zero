@@ -147,3 +147,21 @@ body.ab-portal-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.ab-button{transition:none}}
 
 .site-footer{display:none}
+
+/* Partner recovery: matching hierarchy and keyboard-accessible affordances. */
+.recovery-shortcut{margin:12px 0 0;text-align:right}
+.recovery-text-button{appearance:none;display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:6px 0;border:none;background:transparent;color:#075af0;font:800 13px/1.4 "DM Sans",system-ui,sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.recovery-text-button:focus-visible,.recovery-footer a:focus-visible{outline:3px solid #075af0;outline-offset:3px;border-radius:4px}
+#recovery-view .auth-sub{margin:0 0 24px;color:#5c6880}
+#recovery-view .auth-form{display:flex;flex-direction:column;gap:10px;min-width:0}
+#recovery-view .auth-form label{margin-bottom:2px;font-size:13px;font-weight:800;color:#22324a}
+#recovery-view .auth-form input{width:100%;max-width:100%;min-height:48px;background:#fff;color:#1c2535;border:1px solid #cfdae9;border-radius:11px;padding:12px 13px}
+#recovery-view .auth-form input:focus-visible{outline:2px solid #075af0;outline-offset:1px}
+#recovery-view .auth-form .btn{width:100%;margin-top:10px;white-space:normal;min-height:49px}
+#recovery-view .auth-form .micro{margin:7px 0 4px;line-height:1.6}
+.recovery-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;margin-top:22px;padding-top:13px;border-top:1px solid #e1e8f1}
+.recovery-footer a{font-size:12px;line-height:1.5;font-weight:700;color:#3566ad;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:390px){
+ .recovery-footer{align-items:flex-start;flex-direction:column}
+ #recovery-view .auth-title{font-size:23px}
+}
