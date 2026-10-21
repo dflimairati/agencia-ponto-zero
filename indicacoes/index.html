@@ -273,8 +273,31 @@
             <label for="login-password">Sua senha</label>
             <input id="login-password" type="password" name="password" required autocomplete="current-password" placeholder="Digite sua senha">
             <button type="submit" id="login-button" class="btn btn-bright">Acessar meu painel <span aria-hidden="true">↗</span></button>
-            <p class="micro">Esqueceu sua senha? <a href="https://wa.me/5542998319122?text=Preciso%20recuperar%20o%20acesso%20%C3%A0%20Central%20de%20Indica%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer">Solicitar recuperação ao suporte.</a></p>
+            <p class="micro recovery-shortcut"><button class="recovery-text-button" id="forgot-password-button" type="button">Esqueci minha senha</button></p>
           </form>
+        </div>
+        <div id="recovery-view" hidden>
+          <span class="auth-overline">Central de Indicações</span>
+          <h3 class="auth-title" id="recovery-title">Redefinir senha</h3>
+          <p class="auth-sub" id="recovery-description">Informe o e-mail usado no cadastro para receber um link seguro de redefinição.</p>
+          <form id="reset-request-form" class="auth-form">
+            <label for="reset-email">E-mail cadastrado no programa</label>
+            <input id="reset-email" type="email" required maxlength="254" autocomplete="email" placeholder="seu@email.com">
+            <button id="reset-request-button" class="btn btn-bright" type="submit">Enviar link de recuperação ↗</button>
+            <p class="micro">Por segurança, a resposta será a mesma independentemente de existir uma conta neste e-mail. O link vence em 20 minutos.</p>
+          </form>
+          <form id="reset-complete-form" class="auth-form" hidden>
+            <label for="reset-password">Nova senha</label>
+            <input id="reset-password" type="password" required minlength="10" maxlength="128" autocomplete="new-password" placeholder="Pelo menos 10 caracteres">
+            <label for="reset-confirm">Confirmar nova senha</label>
+            <input id="reset-confirm" type="password" required minlength="10" maxlength="128" autocomplete="new-password" placeholder="Repita a nova senha">
+            <button id="reset-complete-button" class="btn btn-bright" type="submit">Salvar nova senha ↗</button>
+            <p class="micro">Depois de redefinir, suas sessões anteriores serão encerradas. Suas indicações e seus dados Pix permanecem intactos.</p>
+          </form>
+          <div class="recovery-footer">
+            <button type="button" class="recovery-text-button" id="recovery-back-button">← Voltar ao login</button>
+            <a href="https://wa.me/5542998319122?text=Preciso%20de%20ajuda%20para%20recuperar%20a%20conta%20de%20indicacoes" target="_blank" rel="noopener noreferrer">Precisa de ajuda? Suporte</a>
+          </div>
         </div>
         <div id="partner-view" hidden>
           <div class="partner-bar"><div><span class="auth-overline">Meu painel de indicações</span><h3 id="partner-name">Bem-vindo!</h3><p class="micro" id="partner-email"></p></div><button type="button" class="smallbtn" id="logout-button">Sair</button></div>
@@ -391,6 +414,7 @@
       catch{notify("Copie o texto pelo campo acima ou compartilhe pelo WhatsApp.")}
     }
     function showPartner(p){
+      document.getElementById("recovery-view").hidden=true;
       document.getElementById("auth-view").hidden=true;
       document.getElementById("partner-view").hidden=false;
       document.getElementById("partner-name").textContent=p.name;
@@ -501,6 +525,7 @@
       catch(e){message(e.message||"Não foi possível salvar.")}finally{btn.disabled=false;}
     });
     function showAuth(login=false){
+      document.getElementById("recovery-view").hidden=true;
       document.getElementById("partner-view").hidden=true;
       document.getElementById("auth-view").hidden=false;
       document.getElementById("tab-login").classList.toggle("active",login);
@@ -510,6 +535,56 @@
       document.getElementById("signup-form").hidden=login;
       document.getElementById("login-form").hidden=!login;message("");
     }
+    let passwordResetToken="";
+    function showRecovery(hasToken=false){
+      document.getElementById("partner-view").hidden=true;
+      document.getElementById("auth-view").hidden=true;
+      document.getElementById("recovery-view").hidden=false;
+      document.getElementById("reset-request-form").hidden=hasToken;
+      document.getElementById("reset-complete-form").hidden=!hasToken;
+      document.getElementById("recovery-title").textContent=hasToken?"Criar nova senha":"Esqueceu sua senha?";
+      document.getElementById("recovery-description").textContent=hasToken
+        ?"Escolha uma senha nova para sua conta de indicações."
+        :"Enviaremos um link de uso único ao e-mail que você cadastrou no programa.";
+      if(!hasToken)document.getElementById("reset-email").value=document.getElementById("login-email").value;
+      message("");
+    }
+    document.getElementById("forgot-password-button").addEventListener("click",()=>showRecovery(false));
+    document.getElementById("recovery-back-button").addEventListener("click",()=>{
+      passwordResetToken="";
+      document.getElementById("reset-complete-form").reset();
+      showAuth(true);
+    });
+    document.getElementById("reset-request-form").addEventListener("submit",async event=>{
+      event.preventDefault();
+      const button=document.getElementById("reset-request-button");
+      if(button.disabled)return;
+      button.disabled=true;button.textContent="Solicitando link…";message("");
+      try{
+        const data=await request("request_password_reset",{email:document.getElementById("reset-email").value});
+        message(data.message||"Se este e-mail estiver cadastrado, você receberá um link.", "success");
+      }catch(err){message(err instanceof Error?err.message:"Não foi possível enviar. Fale com o suporte.");}
+      finally{button.disabled=false;button.textContent="Enviar link de recuperação ↗";}
+    });
+    document.getElementById("reset-complete-form").addEventListener("submit",async event=>{
+      event.preventDefault();message("");
+      const password=document.getElementById("reset-password").value;
+      const confirm=document.getElementById("reset-confirm").value;
+      if(password!==confirm){message("As senhas não coincidem. Digite novamente.");return;}
+      if(!/^[a-f0-9]{64}$/.test(passwordResetToken)){message("Este link não é válido. Solicite outro pelo botão Esqueci minha senha.");return;}
+      const button=document.getElementById("reset-complete-button");
+      if(button.disabled)return;
+      button.disabled=true;button.textContent="Salvando senha…";
+      try{
+        await request("reset_password",{token:passwordResetToken,password});
+        passwordResetToken="";
+        setToken("");
+        document.getElementById("reset-complete-form").reset();
+        showAuth(true);
+        message("Senha alterada com sucesso. Entre com sua nova senha.","success");
+      }catch(err){message(err instanceof Error?err.message:"Não foi possível redefinir a senha.");}
+      finally{button.disabled=false;button.textContent="Salvar nova senha ↗";}
+    });
     document.getElementById("tab-login").addEventListener("click",()=>showAuth(true));
     document.getElementById("tab-register").addEventListener("click",()=>showAuth(false));
     async function submit(form,button,action,data){
@@ -572,11 +647,19 @@
     referralClose.addEventListener("click",closeReferralModal);
     referralBackdrop.addEventListener("click",closeReferralModal);
     document.addEventListener("keydown",event=>{if(event.key==="Escape"&&!referralModal.hidden)closeReferralModal();});
-    if(new URLSearchParams(location.search).get("entrar")==="1"){showAuth(true);openReferralModal();}
+    // Hash fragments are never sent to the hosting server; remove the token from history immediately.
+    const resetHash=/^#redefinir=([a-f0-9]{64})$/i.exec(location.hash);
+    const isPasswordResetLink=!!resetHash;
+    if(resetHash){
+      passwordResetToken=resetHash[1].toLowerCase();
+      history.replaceState(null,"",location.pathname+location.search);
+      showRecovery(true);openReferralModal();
+    }else if(new URLSearchParams(location.search).get("entrar")==="1"){showAuth(true);openReferralModal();}
     else if(location.hash==="#meucodigo")openReferralModal();
+    else if(new URLSearchParams(location.search).get("esqueci")==="1"){showRecovery(false);openReferralModal();}
 
     const savedToken=getToken();
-    if(savedToken)request("me",{},savedToken).then(data=>{if(data.partner)showPartner(data.partner)}).catch(()=>{setToken("");showAuth(true)});
+    if(savedToken&&!isPasswordResetLink)request("me",{},savedToken).then(data=>{if(data.partner)showPartner(data.partner)}).catch(()=>{setToken("");showAuth(true)});
     if(productSlug){
       const product=products.find(p=>p.slug===productSlug);
       const panel=document.getElementById("redirect");
